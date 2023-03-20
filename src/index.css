@@ -1,0 +1,22 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+  /*noinspection ALL*/
+  main {
+    min-height: -webkit-fill-available;
+    min-height: 100vh;
+  }
+}
+
+@layer base {
+  .title,
+  .sub-title {
+    font-family: 'Roboto Flex', sans-serif;
+  }
+
+  .font-fm {
+    font-family: 'Comfortaa', cursive;
+  }
+}
