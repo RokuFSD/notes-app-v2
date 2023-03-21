@@ -7,7 +7,7 @@ type OptionsProps = {
 
 function Option({ name, id }: OptionsProps) {
   return (
-    <option value={name} id={id}>
+    <option value={id} id={id}>
       {name}
     </option>
   );

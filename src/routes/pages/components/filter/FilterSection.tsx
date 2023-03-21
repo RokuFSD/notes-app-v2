@@ -16,8 +16,8 @@ function FilterSection({ data }: FilterSectionProps) {
     <Filter.Btn
       text={`#${option.name}`}
       key={option.id}
-      value={option.name}
-      isCurrent={selectedProject === option.name}
+      value={option.id}
+      isCurrent={selectedProject.name === option.name}
     />
   ));
 
@@ -28,7 +28,7 @@ function FilterSection({ data }: FilterSectionProps) {
   return (
     <div className="flex flex-col gap-5">
       {/*  Filter dropdown */}
-      <Filter.Drop defaultValue={selectedProject}>{Options}</Filter.Drop>
+      <Filter.Drop defaultValue={selectedProject.id}>{Options}</Filter.Drop>
       {/*  Filter tabs */}
       <Filter.Scroll>{Buttons}</Filter.Scroll>
     </div>

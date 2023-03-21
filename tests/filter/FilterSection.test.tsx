@@ -25,6 +25,6 @@ describe("Filter section", () => {
     const buttons = screen.queryAllByRole("button");
     fireEvent.click(buttons[1]);
     const select: HTMLSelectElement = screen.getByTitle("tag");
-    expect(select.value).toBe(dropOptions[1].name);
+    expect(select.value).toBe(dropOptions[1].id);
   });
 });
