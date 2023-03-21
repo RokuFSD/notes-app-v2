@@ -5,7 +5,7 @@ import { notedata } from "../../src/mocks/api";
 
 describe("Notes container", () => {
   it("Should render without error", () => {
-    render(<NotesContainer data={notedata} />);
+    render(<NotesContainer />);
     const cards = screen.queryAllByTestId("note-card");
     expect(cards.length).toBe(notedata.length);
   });

@@ -1,6 +1,8 @@
 lockfileVersion: 5.4
 
 specifiers:
+  '@coreui/icons': ^3.0.1
+  '@coreui/icons-react': ^2.1.0
   '@testing-library/dom': ^9.0.1
   '@testing-library/jest-dom': ^5.16.5
   '@testing-library/react': ^14.0.0
@@ -35,6 +37,8 @@ specifiers:
   vitest: ^0.29.3
 
 dependencies:
+  '@coreui/icons': 3.0.1
+  '@coreui/icons-react': 2.1.0_biqbaboplfbrettd7655fr4n2y
   jotai: 2.0.3_react@18.2.0
   react: 18.2.0
   react-dom: 18.2.0_react@18.2.0
@@ -314,6 +318,20 @@ packages:
   /@bcoe/v8-coverage/0.2.3:
     resolution: {integrity: sha512-0hYQ8SB4Db5zvZB4axdMHGwEaQjkZzFjQiN9LVYvIFB2nSUHW9tYpxWriPrWDASIxiaXax83REcLxuSdnGPZtw==}
     dev: true
+
+  /@coreui/icons-react/2.1.0_biqbaboplfbrettd7655fr4n2y:
+    resolution: {integrity: sha512-x7qhVB6IJFbGBh/An3QZHtuUISM+TBgc4x3ecrBel+wMdJm4Qpmg9Km0GFfOkP6/fNOfy2fLb2wZ2bbe5+sgQA==}
+    peerDependencies:
+      react: '>=17'
+      react-dom: '>=17'
+    dependencies:
+      react: 18.2.0
+      react-dom: 18.2.0_react@18.2.0
+    dev: false
+
+  /@coreui/icons/3.0.1:
+    resolution: {integrity: sha512-u9UKEcRMyY9pa4jUoLij8pAR03g5g6TLWV33/Mx2ix8sffyi0eO4fLV8DSTQljDCw938zt7KYog5cVKEAJUxxg==}
+    dev: false
 
   /@esbuild/android-arm/0.17.12:
     resolution: {integrity: sha512-E/sgkvwoIfj4aMAPL2e35VnUJspzVYl7+M1B2cqeubdBhADV4uPon0KCc8p2G+LqSJ6i8ocYPCqY3A4GGq0zkQ==}

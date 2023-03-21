@@ -27,7 +27,7 @@ function NoteCard({
   const bgColor = colorsMap.get(color);
   return (
     <div
-      className={`${bgColor} drop-shadow-2xl flex flex-col font-fm p-2 border-2 
+      className={`${bgColor} card drop-shadow-2xl flex flex-col font-fm p-2 border-2 
       border-zinc-700 rounded-2xl break-words -rotate-6 h-48 gap-8
       overflow-clip
       ${index % 2 === 1 && "-ml-1"}

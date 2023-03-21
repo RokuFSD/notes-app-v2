@@ -1,7 +1,7 @@
 import React from "react";
 import { createBrowserRouter, RouteObject } from "react-router-dom";
 import App from "../App";
-import DashBoard from "./pages/dashboard/DashBoard";
+import DashBoard, { loader } from "./pages/dashboard/DashBoard";
 
 const routes: RouteObject[] = [
   {
@@ -11,6 +11,7 @@ const routes: RouteObject[] = [
       {
         index: true,
         element: <DashBoard />,
+        loader: loader,
       },
     ],
   },

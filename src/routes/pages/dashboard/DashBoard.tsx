@@ -3,10 +3,20 @@ import HeadSection from "../../../components/HeadSection";
 import ViewContext from "./context/ViewContext";
 import FilterSection from "../components/filter/FilterSection";
 import NotesContainer from "../components/view/NotesContainer";
-import { dropOptions, notedata } from "../../../mocks/api";
 import FilterContext from "./context/FilterContext";
+import { useLoaderData } from "react-router-dom";
+import { dropOptions } from "../../../mocks/api";
+
+// React router loader
+export async function loader() {
+  const projects: Promise<typeof dropOptions> = new Promise((resolve) =>
+    resolve(dropOptions)
+  );
+  return await projects;
+}
 
 function DashBoard() {
+  const projects = useLoaderData() as typeof dropOptions;
   return (
     <>
       {/* Header with title and add button */}
@@ -15,10 +25,10 @@ function DashBoard() {
       {/* Filter section */}
       {/* TODO: The selector of the view here*/}
       <FilterContext>
-        <FilterSection data={dropOptions} />
+        <FilterSection data={projects} />
         {/* Notes */}
         <ViewContext>
-          <NotesContainer data={notedata} />
+          <NotesContainer />
         </ViewContext>
       </FilterContext>
     </>
