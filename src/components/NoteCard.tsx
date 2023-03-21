@@ -34,12 +34,13 @@ function NoteCard({
       ${index > 1 && index % 2 === 1 && "-mt-1 -ml-3"}
       ${index > 1 && index % 2 === 0 && "mt-1"}
       `}
+      data-testid="note-card"
     >
       <div>
         <h2 className="font-extrabold text-lg">{title}</h2>
         <span>{createdAt}</span>
       </div>
-      <p className="text-md">{description}</p>
+      <p className="text-md opacity-60">{description}</p>
     </div>
   );
 }

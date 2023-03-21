@@ -13,6 +13,7 @@ function Drop({ children, defaultValue }: DropProps) {
       onChange={(e) => changeProject(e.currentTarget.value)}
       value={defaultValue}
       className="bg-zinc-300 w-32 rounded-md px-1 h-7 font.fm font-semibold text-md"
+      title="tag"
     >
       {children}
     </select>
