@@ -16,7 +16,7 @@ function Btn({ text, value, isCurrent }: BtnProps) {
       onClick={() => changeProject(value)}
       variant={isCurrent ? "active" : ""}
       className={
-        "px-4 h-8 font-fm font-semibold text-sm flex items-center justify-center border-[1px]"
+        "px-4 h-8 font-fm font-semibold flex items-center justify-center border-[1px] text-xs"
       }
     />
   );

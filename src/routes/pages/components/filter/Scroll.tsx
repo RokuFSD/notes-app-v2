@@ -5,7 +5,7 @@ type ScrollProps = {
 };
 
 function Scroll({ children }: ScrollProps) {
-  return <div className="flex gap-2">{children}</div>;
+  return <div className="flex gap-2 overflow-auto py-3">{children}</div>;
 }
 
 export default memo(Scroll);

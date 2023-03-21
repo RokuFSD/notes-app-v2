@@ -1,25 +1,18 @@
-import React, { useMemo } from "react";
+import React from "react";
 import * as Filter from "./index";
 import { useFilterContext } from "../../dashboard/context/FilterContext";
 
-function FilterSection() {
-  const dropOptions = useMemo(
-    () => [
-      {
-        id: "id1",
-        name: "All",
-      },
-      {
-        id: "id2",
-        name: "Work",
-      },
-    ],
-    []
-  );
+type FilterSectionProps = {
+  data: {
+    id: string;
+    name: string;
+  }[];
+};
 
+function FilterSection({ data }: FilterSectionProps) {
   const { selectedProject } = useFilterContext();
 
-  const Buttons = dropOptions.map((option) => (
+  const Buttons = data.map((option) => (
     <Filter.Btn
       text={`#${option.name}`}
       key={option.id}
@@ -28,7 +21,7 @@ function FilterSection() {
     />
   ));
 
-  const Options = dropOptions.map((option) => (
+  const Options = data.map((option) => (
     <Filter.Option key={option.id} name={option.name} id={option.id} />
   ));
 
