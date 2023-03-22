@@ -3,10 +3,10 @@ import React, { useRef, useState } from "react";
 type IFormArea<T> = {
   name: string;
   placeholder: string;
-  valueSelector?: <SelectorOutput>(
+  valueselector?: <SelectorOutput>(
     selector: (state: any) => SelectorOutput
   ) => (((value: Partial<T>) => void) | SelectorOutput)[];
-  errorSelector?: (key: string) => string;
+  errorselector?: (key: string) => string;
   className?: string;
   required?: boolean;
 };
@@ -14,18 +14,18 @@ type IFormArea<T> = {
 function FormArea<T>({
   name,
   placeholder,
-  valueSelector,
-  errorSelector,
+  valueselector,
+  errorselector,
   className,
   required,
 }: IFormArea<T>) {
-  if (!valueSelector || !errorSelector) {
+  if (!valueselector || !errorselector) {
     throw new Error("FormInput must be used inside a Form component");
   }
   const areaRef = useRef<HTMLTextAreaElement | null>(null);
-  const [value, setValue] = valueSelector((state: any) => state[name]);
+  const [value, setValue] = valueselector((state: any) => state[name]);
   const [touch, setTouch] = useState(false);
-  const error = errorSelector(name);
+  const error = errorselector(name);
 
   return (
     <textarea

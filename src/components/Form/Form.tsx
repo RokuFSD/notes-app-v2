@@ -3,6 +3,7 @@ import React, { ReactNode } from "react";
 import useForm from "../../hooks/useForm";
 import FormInput, { IFormInput } from "./FormInput";
 import FormArea from "./FormArea";
+import FormSelect from "./FormSelect";
 import { ValidationArr } from "../../../types/form";
 import FormSubmit from "./FormSubmit";
 import { Form as FormRouter, FormProps } from "react-router-dom";
@@ -40,10 +41,14 @@ function Form<T>({
               disabled: !canSubmit,
             } as { disabled: boolean; loading: boolean });
           }
-          if (child.type === FormInput || child.type === FormArea) {
+          if (
+            child.type === FormInput ||
+            child.type === FormArea ||
+            child.type === FormSelect
+          ) {
             return React.cloneElement(child, {
-              valueSelector: useValue,
-              errorSelector: selectError,
+              valueselector: useValue,
+              errorselector: selectError,
             } as IFormInput<T>);
           }
         }

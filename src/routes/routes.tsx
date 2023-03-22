@@ -30,12 +30,6 @@ const routes: RouteObject[] = [
         element: <div>New project</div>,
       },
     ],
-    // children: [
-    //   {
-    //     path: "new",
-    //     element: <div>New note</div>,
-    //   },
-    // ],
   },
 ];
 

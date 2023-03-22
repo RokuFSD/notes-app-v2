@@ -1,20 +1,25 @@
 import React from "react";
 import * as Form from "../../../components/Form";
 import { ActionFunction, useNavigate } from "react-router-dom";
+import { dropOptions } from "../../../mocks/api";
 
 const initialValues = {
   title: "",
   description: "",
+  name: "id1", // Default all projects
 };
 
 export const action: ActionFunction = async ({ request }) => {
   const data = await request.formData();
-  console.log(data);
+  console.log(Object.fromEntries(data.entries()));
   return data;
 };
 
 export function Newnote() {
   const navigate = useNavigate();
+  const options = dropOptions.map((option) => (
+    <Form.FormOption key={option.id} name={option.name} id={option.id} />
+  ));
 
   function goBack() {
     navigate(-1);
@@ -40,14 +45,26 @@ export function Newnote() {
           className="row-start-2 row-span-4 text-md p-2 w-full bg-transparent font-fm"
           required
         />
-        <div className="row-start-6 flex justify-around items-center absolute top-full w-full mt-2 h-14">
-          <button className="w-1/2 h-full" onClick={() => goBack()}>
+        <div className="flex justify-around items-center absolute top-full w-full mt-2 h-14">
+          <button className="w-1/2 h-full title" onClick={() => goBack()}>
             Cancel
           </button>
-          <Form.FormSubmit className="bg-lime-300 w-full h-full rounded-2xl border border-slate-700">
+          <Form.FormSubmit className="bg-lime-300 w-full h-full rounded-2xl border border-slate-700 title">
             Create
           </Form.FormSubmit>
         </div>
+        <label
+          htmlFor="project"
+          className="row-start-6 row-span-1 col-start-1 z-40 justify-self-center pointer-events-none font-fm"
+        >
+          Save in project
+        </label>
+        <Form.FormSelect
+          name="project"
+          className="row-start-6 row-span-1 col-span-full col-start-1 z-10 bg-transparent font-fm p-2 font-semibold"
+        >
+          {options}
+        </Form.FormSelect>
       </Form.Form>
     </section>
   );
