@@ -1,8 +1,8 @@
 import React from "react";
 import HeadSection from "../../../components/HeadSection";
 import ViewContext from "./context/ViewContext";
-import FilterSection from "../components/filter/FilterSection";
-import NotesContainer from "../components/view/NotesContainer";
+import FilterSection from "./components/filter/FilterSection";
+import NotesContainer from "./components/view/NotesContainer";
 import FilterContext from "./context/FilterContext";
 import { useLoaderData } from "react-router-dom";
 import { dropOptions } from "../../../mocks/api";

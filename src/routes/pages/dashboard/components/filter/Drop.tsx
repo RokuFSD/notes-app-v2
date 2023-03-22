@@ -1,5 +1,5 @@
 import React, { ReactNode } from "react";
-import { useFilterContextAPI } from "../../dashboard/context/FilterContext";
+import { useFilterContextAPI } from "../../context/FilterContext";
 
 type DropProps = {
   children: ReactNode;

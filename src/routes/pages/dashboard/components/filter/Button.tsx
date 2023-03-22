@@ -1,6 +1,6 @@
 import React, { memo } from "react";
-import Button from "../../../../components/Button";
-import { useFilterContextAPI } from "../../dashboard/context/FilterContext";
+import Button from "../../../../../components/Button";
+import { useFilterContextAPI } from "../../context/FilterContext";
 
 type BtnProps = {
   text: string;

@@ -1,6 +1,6 @@
 import React from "react";
 import * as Filter from "./index";
-import { useFilterContext } from "../../dashboard/context/FilterContext";
+import { useFilterContext } from "../../context/FilterContext";
 
 type FilterSectionProps = {
   data: {

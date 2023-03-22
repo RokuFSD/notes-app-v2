@@ -13,6 +13,13 @@ const routes: RouteObject[] = [
         element: <DashBoard />,
         loader: loader,
       },
+      {
+        path: "/projects",
+        async lazy() {
+          const { Projects } = await import("./pages/projects/Projects");
+          return { Component: Projects };
+        },
+      },
     ],
   },
   {
@@ -27,6 +34,10 @@ const routes: RouteObject[] = [
       },
       {
         path: "/projects/new",
+        async lazy() {
+          const { Newproject } = await import("./pages/new-project/Newproject");
+          return { Component: Newproject };
+        },
         element: <div>New project</div>,
       },
     ],

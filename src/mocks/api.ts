@@ -70,33 +70,41 @@ export const dropOptions = [
   {
     id: "id1",
     name: "All",
+    notes: new Array(3),
   },
   {
     id: "id2",
     name: "Work",
+    notes: new Array(10),
   },
   {
     id: "id3",
-    name: "University",
+    name: "Personal",
+    notes: new Array(1),
   },
   {
     id: "id4",
     name: "None",
+    notes: new Array(0),
   },
   {
     id: "id5",
     name: "Gym",
+    notes: new Array(0),
   },
   {
     id: "id6",
     name: "Job",
+    notes: new Array(0),
   },
   {
     id: "id7",
     name: "asd",
+    notes: new Array(0),
   },
   {
     id: "id8",
     name: "Group",
+    notes: new Array(20),
   },
 ];

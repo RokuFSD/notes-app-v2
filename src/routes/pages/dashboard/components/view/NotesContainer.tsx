@@ -1,7 +1,7 @@
 import React, { useMemo } from "react";
-import NoteCard from "../../../../components/NoteCard";
-import { useFilterContext } from "../../dashboard/context/FilterContext";
-import { notedata } from "../../../../mocks/api";
+import NoteCard from "../../../../../components/NoteCard";
+import { useFilterContext } from "../../context/FilterContext";
+import { notedata } from "../../../../../mocks/api";
 
 // type NotesContainerProps = {
 //   data: {

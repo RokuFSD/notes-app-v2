@@ -1,5 +1,5 @@
 import React from "react";
-import FilterSection from "../../src/routes/pages/components/filter/FilterSection";
+import FilterSection from "../../src/routes/pages/dashboard/components/filter/FilterSection";
 import FilterContext from "../../src/routes/pages/dashboard/context/FilterContext";
 import { fireEvent, render, screen } from "@testing-library/react";
 import { dropOptions } from "../../src/mocks/api";
