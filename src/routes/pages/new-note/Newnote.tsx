@@ -58,11 +58,13 @@ export function Newnote() {
         </div>
         <label
           htmlFor="project"
+          aria-labelledby="project"
           className="row-start-6 row-span-1 col-start-1 z-40 justify-self-center pointer-events-none font-fm"
         >
           Save in project
         </label>
         <Form.FormSelect
+          id="project"
           name="project"
           className="row-start-6 row-span-1 col-span-full col-start-1 z-10 bg-transparent font-fm p-2 font-semibold"
         >

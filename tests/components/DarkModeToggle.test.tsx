@@ -5,13 +5,13 @@ import { render, screen, fireEvent } from "@testing-library/react";
 describe("Dark mode component", () => {
   it("Should start on dark mode", () => {
     render(<DarkModeToggle />);
-    expect(screen.getByText("Dark")).toBeInTheDocument();
+    expect(screen.getByLabelText("go-dark")).toBeInTheDocument();
   });
 
   it("Should change the text on click to Light", () => {
     render(<DarkModeToggle />);
-    const button = screen.getByText("Dark");
+    const button = screen.getByLabelText("go-dark");
     fireEvent.click(button);
-    expect(screen.getByText("Light")).toBeInTheDocument();
+    expect(screen.getByLabelText("go-light")).toBeInTheDocument();
   });
 });

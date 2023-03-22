@@ -9,6 +9,7 @@ type FormSelectProps<T> = {
   name: string;
 
   className?: string;
+  id: string;
 };
 
 function FormSelect<T>({
@@ -16,6 +17,7 @@ function FormSelect<T>({
   valueselector,
   name,
   className,
+  id,
 }: FormSelectProps<T>) {
   if (!valueselector) {
     throw new Error("FormInput must be used inside a Form component");
@@ -25,6 +27,7 @@ function FormSelect<T>({
   const [value, setValue] = valueselector((state: any) => state[name]);
   return (
     <select
+      id={id}
       name={name}
       ref={selectRef}
       onChange={(evt) => setValue({ [name]: evt.currentTarget.value })}

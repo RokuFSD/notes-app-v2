@@ -19,7 +19,11 @@ function DarkModeToggle() {
   }
 
   return (
-    <button type="button" onClick={() => toggleDarkMode()}>
+    <button
+      aria-label={darkMode ? "go-light" : "go-dark"}
+      type="button"
+      onClick={() => toggleDarkMode()}
+    >
       <CIcon.default icon={darkMode ? cilSun : cilMoon} className="w-5 h-5" />
     </button>
   );
