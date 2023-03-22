@@ -28,7 +28,8 @@
     "tests",
     "tests/setup.ts",
     ".eslintrc.json",
-    "vite.config.ts"
+    "vite.config.ts",
+    "types"
   ],
   "references": [
     {

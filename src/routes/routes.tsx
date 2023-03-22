@@ -1,12 +1,12 @@
 import React from "react";
 import { createBrowserRouter, RouteObject } from "react-router-dom";
-import App from "../App";
 import DashBoard, { loader } from "./pages/dashboard/DashBoard";
+import WithNav from "../components/Layout/WithNav";
 
 const routes: RouteObject[] = [
   {
     path: "/",
-    element: <App />,
+    element: <WithNav />,
     children: [
       {
         index: true,
@@ -14,6 +14,28 @@ const routes: RouteObject[] = [
         loader: loader,
       },
     ],
+  },
+  {
+    lazy: () => import("../components/Layout/Base"),
+    children: [
+      {
+        path: "/notes/new",
+        async lazy() {
+          const { Newnote, action } = await import("./pages/new-note/Newnote");
+          return { Component: Newnote, action };
+        },
+      },
+      {
+        path: "/projects/new",
+        element: <div>New project</div>,
+      },
+    ],
+    // children: [
+    //   {
+    //     path: "new",
+    //     element: <div>New note</div>,
+    //   },
+    // ],
   },
 ];
 

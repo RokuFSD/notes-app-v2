@@ -1,8 +1,8 @@
 import React from "react";
 import { Outlet } from "react-router-dom";
-import Navbar from "./components/Nav/Navbar";
+import Navbar from "../Nav/Navbar";
 
-function App() {
+function WithNav() {
   return (
     <>
       <main className="bg-slate-100 dark:bg-zinc-700 p-5 flex flex-col gap-10 pb-20">
@@ -15,4 +15,4 @@ function App() {
   );
 }
 
-export default App;
+export default WithNav;
