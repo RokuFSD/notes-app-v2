@@ -3,20 +3,31 @@
 @tailwind utilities;
 
 @layer components {
-  /*noinspection ALL*/
-  main {
-    min-height: -webkit-fill-available;
-    min-height: 100vh;
-  }
-}
-
-@layer base {
   .title,
   .sub-title {
-    font-family: 'Roboto Flex', sans-serif;
+    font-family: 'Sofia Sans Extra Condensed', sans-serif;
   }
 
   .font-fm {
     font-family: 'Comfortaa', cursive;
+  }
+}
+
+@layer base {
+  /*noinspection ALL*/
+  #root {
+    min-height: -webkit-fill-available;
+    min-height: 100vh;
+    display: grid;
+    grid-template-columns: 100%;
+    grid-template-rows: fit-content(100%) 1fr;
+  }
+
+  input,
+  textarea,
+  button,
+  select,
+  a {
+    -webkit-tap-highlight-color: transparent;
   }
 }

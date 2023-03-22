@@ -1,6 +1,6 @@
 import React from "react";
 import * as Form from "../../../components/Form";
-import { ActionFunction, useNavigate } from "react-router-dom";
+import { ActionFunction, redirect, useNavigate } from "react-router-dom";
 import { dropOptions } from "../../../mocks/api";
 
 const initialValues = {
@@ -12,7 +12,7 @@ const initialValues = {
 export const action: ActionFunction = async ({ request }) => {
   const data = await request.formData();
   console.log(Object.fromEntries(data.entries()));
-  return data;
+  return redirect("/");
 };
 
 export function Newnote() {
@@ -26,7 +26,7 @@ export function Newnote() {
   }
 
   return (
-    <section className="min-h-full relative">
+    <section className="h-5/6 relative">
       <Form.Form
         initialValues={initialValues}
         method="post"
@@ -46,10 +46,13 @@ export function Newnote() {
           required
         />
         <div className="flex justify-around items-center absolute top-full w-full mt-2 h-14">
-          <button className="w-1/2 h-full title" onClick={() => goBack()}>
+          <button
+            className="w-1/2 h-full title text-xl"
+            onClick={() => goBack()}
+          >
             Cancel
           </button>
-          <Form.FormSubmit className="bg-lime-300 w-full h-full rounded-2xl border border-slate-700 title">
+          <Form.FormSubmit className="text-xl bg-lime-300 w-full h-full rounded-2xl border border-slate-700 title">
             Create
           </Form.FormSubmit>
         </div>
