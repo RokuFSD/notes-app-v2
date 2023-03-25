@@ -1,6 +1,6 @@
 import React from "react";
 import { render, screen } from "@testing-library/react";
-import NotesContainer from "../../src/routes/pages/dashboard/components/view/NotesContainer";
+import NotesContainer from "../../src/components/NotesContainer";
 import { notedata } from "../../src/mocks/api";
 
 describe("Notes container", () => {

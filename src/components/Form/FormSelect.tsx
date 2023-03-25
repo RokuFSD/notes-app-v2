@@ -10,6 +10,7 @@ type FormSelectProps<T> = {
 
   className?: string;
   id: string;
+  disabled: boolean;
 };
 
 function FormSelect<T>({
@@ -18,6 +19,7 @@ function FormSelect<T>({
   name,
   className,
   id,
+  disabled,
 }: FormSelectProps<T>) {
   if (!valueselector) {
     throw new Error("FormInput must be used inside a Form component");
@@ -34,6 +36,7 @@ function FormSelect<T>({
       value={value}
       className={className}
       title="tag"
+      disabled={disabled}
     >
       {children}
     </select>

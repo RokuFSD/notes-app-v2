@@ -2,6 +2,7 @@ import React from "react";
 import { createBrowserRouter, RouteObject } from "react-router-dom";
 import DashBoard, { loader } from "./pages/dashboard/DashBoard";
 import WithNav from "../components/Layout/WithNav";
+import FilterContext from "./pages/dashboard/context/FilterContext";
 
 const routes: RouteObject[] = [
   {
@@ -10,7 +11,11 @@ const routes: RouteObject[] = [
     children: [
       {
         index: true,
-        element: <DashBoard />,
+        element: (
+          <FilterContext>
+            <DashBoard />
+          </FilterContext>
+        ),
         loader: loader,
       },
       {
@@ -18,6 +23,13 @@ const routes: RouteObject[] = [
         async lazy() {
           const { Projects } = await import("./pages/projects/Projects");
           return { Component: Projects };
+        },
+      },
+      {
+        path: "/projects/:projectId",
+        async lazy() {
+          const { Project, loader } = await import("./pages/project/Project");
+          return { Component: Project, loader };
         },
       },
     ],
@@ -35,8 +47,10 @@ const routes: RouteObject[] = [
       {
         path: "/projects/new",
         async lazy() {
-          const { Newproject } = await import("./pages/new-project/Newproject");
-          return { Component: Newproject };
+          const { Newproject, action } = await import(
+            "./pages/new-project/Newproject"
+          );
+          return { Component: Newproject, action };
         },
         element: <div>New project</div>,
       },

@@ -1,6 +1,11 @@
 import React from "react";
 import * as Form from "../../../components/Form";
-import { ActionFunction, redirect, useNavigate } from "react-router-dom";
+import {
+  ActionFunction,
+  redirect,
+  useLocation,
+  useNavigate,
+} from "react-router-dom";
 import { dropOptions } from "../../../mocks/api";
 
 const initialValues = {
@@ -17,9 +22,15 @@ export const action: ActionFunction = async ({ request }) => {
 
 export function Newnote() {
   const navigate = useNavigate();
-  const options = dropOptions.map((option) => (
-    <Form.FormOption key={option.id} name={option.name} id={option.id} />
-  ));
+  // Project from location
+  const { state } = useLocation();
+  const options = !state?.id ? (
+    dropOptions.map((option) => (
+      <Form.FormOption key={option.id} name={option.name} id={option.id} />
+    ))
+  ) : (
+    <Form.FormOption name={state.name} id={state.id} />
+  );
 
   function goBack() {
     navigate(-1);
@@ -67,6 +78,7 @@ export function Newnote() {
           id="project"
           name="project"
           className="row-start-6 row-span-1 col-span-full col-start-1 z-10 bg-transparent font-fm p-2 font-semibold"
+          disabled={!!state?.id}
         >
           {options}
         </Form.FormSelect>

@@ -1,7 +1,6 @@
 import React, { useMemo } from "react";
-import NoteCard from "../../../../../components/NoteCard";
-import { useFilterContext } from "../../context/FilterContext";
-import { notedata } from "../../../../../mocks/api";
+import NoteCard from "./NoteCard";
+import { notedata } from "../mocks/api";
 
 // type NotesContainerProps = {
 //   data: {
@@ -20,11 +19,15 @@ function filterByProject(data: typeof notedata, projectId: string) {
   return data.filter((note) => note.projectId === projectId);
 }
 
-function NotesContainer() {
-  const {
-    selectedProject: { id },
-  } = useFilterContext();
-  const noteData = useMemo(() => filterByProject(notedata, id), [id]);
+type NotesContainerProps = {
+  projectId: string;
+};
+
+function NotesContainer({ projectId }: NotesContainerProps) {
+  const noteData = useMemo(
+    () => filterByProject(notedata, projectId),
+    [projectId]
+  );
   const notes = noteData.map((note, idx) => (
     <NoteCard
       color={note.color}
