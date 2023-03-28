@@ -12,8 +12,11 @@
     "lint": "eslint --ext .js,.jsx,.ts,.tsx src"
   },
   "dependencies": {
+    "@apollo/client": "^3.7.10",
     "@coreui/icons": "^3.0.1",
     "@coreui/icons-react": "^2.1.0",
+    "graphql": "^16.6.0",
+    "idb": "^7.1.1",
     "jotai": "^2.0.3",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",

@@ -5,21 +5,23 @@ import FilterSection from "./components/filter/FilterSection";
 import NotesContainer from "../../../components/NotesContainer";
 import { useFilterContext } from "./context/FilterContext";
 import { useLoaderData } from "react-router-dom";
-import { dropOptions } from "../../../mocks/api";
 import { PUBLIC_ROUTES } from "../../../../types/routes";
+import { Project } from "../../../../types/state";
+import IDB from "../../../store/idb";
 
 // React router loader
 export async function loader() {
-  const projects: Promise<typeof dropOptions> = new Promise((resolve) =>
-    resolve(dropOptions)
-  );
-  return await projects;
+  // const projects: Promise<typeof dropOptions> = new Promise((resolve) =>
+  //   resolve(dropOptions)
+  // );
+  // return await projects;
+  return await IDB.getProjects();
 }
 
 function DashBoard() {
-  const projects = useLoaderData() as typeof dropOptions;
+  const projects = useLoaderData() as Project[];
   const {
-    selectedProject: { id },
+    selectedProject: { id }
   } = useFilterContext();
   return (
     <>

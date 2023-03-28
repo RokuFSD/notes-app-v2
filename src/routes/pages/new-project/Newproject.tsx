@@ -1,14 +1,20 @@
 import React from "react";
 import * as Form from "../../../components/Form";
 import { ActionFunction, redirect, useNavigate } from "react-router-dom";
+import IDB from "../../../store/idb";
+import { Project } from "../../../../types/state";
 
 const initialValues = {
-  title: "",
+  title: ""
 };
 
 export const action: ActionFunction = async ({ request }) => {
+  // const data = await request.formData();
+  // console.log(Object.fromEntries(data.entries()));
   const data = await request.formData();
-  console.log(Object.fromEntries(data.entries()));
+  data.set("id", Date.now().toString());
+  const project = Object.fromEntries(data.entries()) as unknown;
+  await IDB.addProject(project as Project);
   return redirect("/projects");
 };
 
@@ -27,7 +33,7 @@ export function Newproject() {
         className="w-full h-min-content grid grid-cols-1 grid-rows-6 border border-slate-700 rounded-2xl overflow-hidden"
       >
         <Form.FormInput
-          name="title"
+          name="name"
           type="text"
           placeholder="Title..."
           required

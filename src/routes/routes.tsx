@@ -16,23 +16,23 @@ const routes: RouteObject[] = [
             <DashBoard />
           </FilterContext>
         ),
-        loader: loader,
+        loader: loader
       },
       {
         path: "/projects",
         async lazy() {
           const { Projects } = await import("./pages/projects/Projects");
           return { Component: Projects };
-        },
+        }
       },
       {
         path: "/projects/:projectId",
         async lazy() {
           const { Project, loader } = await import("./pages/project/Project");
           return { Component: Project, loader };
-        },
-      },
-    ],
+        }
+      }
+    ]
   },
   {
     lazy: () => import("../components/Layout/Base"),
@@ -40,22 +40,22 @@ const routes: RouteObject[] = [
       {
         path: "/notes/new",
         async lazy() {
-          const { Newnote, action } = await import("./pages/new-note/Newnote");
-          return { Component: Newnote, action };
-        },
+          const { Newnote, action, loader } = await import("./pages/new-note/Newnote");
+          return { Component: Newnote, action, loader };
+        }
       },
       {
         path: "/projects/new",
         async lazy() {
           const { Newproject, action } = await import(
             "./pages/new-project/Newproject"
-          );
+            );
           return { Component: Newproject, action };
         },
-        element: <div>New project</div>,
-      },
-    ],
-  },
+        element: <div>New project</div>
+      }
+    ]
+  }
 ];
 
 export const router = createBrowserRouter(routes);

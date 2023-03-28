@@ -2,32 +2,29 @@ import React from "react";
 
 type NoteCardProps = {
   title: string;
-  description: string;
+  content: string;
   createdAt: string;
   //   This is temporal, maybe when we fetch each card in a future this is no more on props
-  color: number;
   index: number;
 };
 
 const colors: [number, string][] = [
   [1, "bg-blue-200"],
   [2, "bg-green-200"],
-  [3, "bg-violet-300"],
+  [3, "bg-violet-300"]
 ];
 
 const colorsMap = new Map(colors);
 
 function NoteCard({
-  title,
-  description,
-  createdAt,
-  color,
-  index,
-}: NoteCardProps) {
-  const bgColor = colorsMap.get(color);
+                    title,
+                    content,
+                    createdAt,
+                    index
+                  }: NoteCardProps) {
   return (
     <div
-      className={`${bgColor} card drop-shadow-2xl flex flex-col font-fm p-2 border-2 
+      className={`card drop-shadow-2xl flex flex-col font-fm p-2 border-2 
       border-zinc-700 rounded-2xl break-words -rotate-6 h-48 gap-8
       overflow-clip
       ${index % 2 === 1 && "-ml-1"}
@@ -40,7 +37,7 @@ function NoteCard({
         <h2 className="font-extrabold text-lg">{title}</h2>
         <span>{createdAt}</span>
       </div>
-      <p className="text-md opacity-60">{description}</p>
+      <p className="text-md opacity-60">{content}</p>
     </div>
   );
 }

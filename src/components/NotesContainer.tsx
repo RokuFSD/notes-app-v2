@@ -1,6 +1,7 @@
-import React, { useMemo } from "react";
+import React, { useEffect, useState } from "react";
 import NoteCard from "./NoteCard";
-import { notedata } from "../mocks/api";
+import IDB from "../store/idb";
+import { Note } from "../../types/state";
 
 // type NotesContainerProps = {
 //   data: {
@@ -13,27 +14,36 @@ import { notedata } from "../mocks/api";
 //   }[];
 // };
 
-// Temporary function to filter our mocked data
-function filterByProject(data: typeof notedata, projectId: string) {
-  if (projectId === "id1") return data;
-  return data.filter((note) => note.projectId === projectId);
-}
-
 type NotesContainerProps = {
   projectId: string;
 };
 
 function NotesContainer({ projectId }: NotesContainerProps) {
-  const noteData = useMemo(
-    () => filterByProject(notedata, projectId),
-    [projectId]
-  );
+  // const noteData = useMemo(
+  //   () => filterByProject(notedata, projectId),
+  //   [projectId]
+  // );
+  const [noteData, setNoteData] = useState<Note[]>([]);
+
+
+  // Temporary effect previous apollo client implementation
+  useEffect(() => {
+    if (!projectId) return;
+
+    async function getNotes() {
+      const notes = await IDB.getProjectNotes(projectId);
+      setNoteData(notes);
+    }
+
+    void getNotes();
+  }, [projectId]);
+
+
   const notes = noteData.map((note, idx) => (
     <NoteCard
-      color={note.color}
       key={note.id}
       title={note.title}
-      description={note.description}
+      content={note.content}
       createdAt={note.createdAt}
       index={idx}
     />

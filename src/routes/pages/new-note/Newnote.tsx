@@ -1,31 +1,49 @@
 import React from "react";
 import * as Form from "../../../components/Form";
 import {
-  ActionFunction,
-  redirect,
+  ActionFunction, LoaderFunction,
+  redirect, useLoaderData,
   useLocation,
-  useNavigate,
+  useNavigate
 } from "react-router-dom";
-import { dropOptions } from "../../../mocks/api";
+import IDB from "../../../store/idb";
+import { Note, Project } from "../../../../types/state";
 
 const initialValues = {
   title: "",
-  description: "",
-  name: "id1", // Default all projects
+  content: "",
+  name: "id1" // Default all projects
 };
 
 export const action: ActionFunction = async ({ request }) => {
   const data = await request.formData();
-  console.log(Object.fromEntries(data.entries()));
+  data.set("id", Date.now().toString());
+  const note = Object.fromEntries(data.entries());
+  await IDB.addNote(note as Note);
   return redirect("/");
+};
+
+export const loader: LoaderFunction = async () => {
+  return await IDB.getProjects();
 };
 
 export function Newnote() {
   const navigate = useNavigate();
   // Project from location
   const { state } = useLocation();
-  const options = !state?.id ? (
-    dropOptions.map((option) => (
+
+  const options = useLoaderData() as Project[];
+
+  // const options = !state?.id ? (
+  //   dropOptions.map((option) => (
+  //     <Form.FormOption key={option.id} name={option.name} id={option.id} />
+  //   ))
+  // ) : (
+  //   <Form.FormOption name={state.name} id={state.id} />
+  // );
+
+  const content = !state?.id ? (
+    options.map((option) => (
       <Form.FormOption key={option.id} name={option.name} id={option.id} />
     ))
   ) : (
@@ -51,8 +69,8 @@ export function Newnote() {
           className="row-start-1 font-fm text-2xl p-2 bg-transparent font-semibold"
         />
         <Form.FormArea
-          name="description"
-          placeholder="Description..."
+          name="content"
+          placeholder="Content..."
           className="row-start-2 row-span-4 text-md p-2 w-full bg-transparent font-fm"
           required
         />
@@ -78,9 +96,9 @@ export function Newnote() {
           id="project"
           name="project"
           className="row-start-6 row-span-1 col-span-full col-start-1 z-10 bg-transparent font-fm p-2 font-semibold"
-          disabled={!!state?.id}
+          disabled={false}
         >
-          {options}
+          {content}
         </Form.FormSelect>
       </Form.Form>
     </section>

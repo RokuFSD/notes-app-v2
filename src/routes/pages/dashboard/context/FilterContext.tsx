@@ -4,9 +4,10 @@ import React, {
   ReactNode,
   useState,
   useCallback,
-  useMemo,
+  useMemo, useEffect
 } from "react";
-import { dropOptions } from "../../../../mocks/api";
+import IDB from "../../../../store/idb";
+import { Project } from "../../../../../types/state";
 
 type ContextType = {
   selectedProject: {
@@ -20,7 +21,7 @@ type ContextApyType = {
 };
 
 const Context = createContext<ContextType>({
-  selectedProject: { id: "id1", name: "All" },
+  selectedProject: { id: "id1", name: "All" }
 });
 const ContextAPI = createContext<ContextApyType>({} as ContextApyType);
 
@@ -31,19 +32,27 @@ type FilterContextProps = {
   children: ReactNode;
 };
 
-const allProjects = new Map();
-dropOptions.forEach((option) => {
-  allProjects.set(option.id, { id: option.id, name: option.name });
-});
-
 function FilterContext({ children }: FilterContextProps) {
-  const [selectedProject, setSelectedProject] = useState<{
-    id: string;
-    name: string;
-  }>(allProjects.get(dropOptions[0].id));
+  const [selectedProject, setSelectedProject] = useState<Project>({
+    id: "id1",
+    name: "All",
+    notes: []
+  } as Project);
+
+  useEffect(() => {
+    async function getInitialProject() {
+      const response = await IDB.getProject("id1");
+      setSelectedProject(response || { id: "id1", name: "All", notes: [] });
+    }
+
+    void getInitialProject();
+  }, []);
 
   const changeProject = useCallback(
-    (id: string) => setSelectedProject(allProjects.get(id)),
+    async (id: string) => {
+      const response = await IDB.getProject(id);
+      setSelectedProject(response || { id: "id1", name: "All", notes: [] });
+    },
     []
   );
   const memoSelectedProject = useMemo(
