@@ -1,45 +1,12 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import NoteCard from "./NoteCard";
-import IDB from "../store/idb";
-import { Note } from "../../types/state";
+import { currentNotesAtom } from "../jotai";
+import { useAtom } from "jotai";
 
-// type NotesContainerProps = {
-//   data: {
-//     id: string;
-//     title: string;
-//     description: string;
-//     createdAt: string;
-//     color: number;
-//     projectId: string;
-//   }[];
-// };
+function NotesContainer() {
+  const [currentNotes] = useAtom(currentNotesAtom);
 
-type NotesContainerProps = {
-  projectId: string;
-};
-
-function NotesContainer({ projectId }: NotesContainerProps) {
-  // const noteData = useMemo(
-  //   () => filterByProject(notedata, projectId),
-  //   [projectId]
-  // );
-  const [noteData, setNoteData] = useState<Note[]>([]);
-
-
-  // Temporary effect previous apollo client implementation
-  useEffect(() => {
-    if (!projectId) return;
-
-    async function getNotes() {
-      const notes = await IDB.getProjectNotes(projectId);
-      setNoteData(notes);
-    }
-
-    void getNotes();
-  }, [projectId]);
-
-
-  const notes = noteData.map((note, idx) => (
+  const notes = currentNotes.map((note, idx) => (
     <NoteCard
       key={note.id}
       title={note.title}

@@ -41,7 +41,7 @@ export default class IDB {
       return await db.getAll("notes");
     }
     await this.saveNotes([]);
-    return []
+    return [];
   }
 
   static async getProjectNotes(id: string) {
@@ -66,7 +66,9 @@ export default class IDB {
 
   static async getProject(id: string) {
     const db = await this.openDB();
-    return await db.get("projects", id);
+    const project = await db.get("projects", id);
+    if (!project) throw new Error("Project not found");
+    return project;
   }
 
   static async saveProjects(projects: Project[]) {
@@ -79,6 +81,10 @@ export default class IDB {
   static async addNote(note: Note) {
     const db = await this.openDB();
     // Save to project
+    if (note.project === "default") {
+      await db.add("notes", note);
+      return;
+    }
     const project = await db.get("projects", note.project);
     if (!project) throw new Error("Project not found");
     project.notes.push(note);

@@ -1,6 +1,7 @@
 import React from "react";
 import * as Filter from "./index";
-import { useFilterContext } from "../../context/FilterContext";
+import { useAtomValue } from "jotai";
+import { currentProjectId } from "../../../../../jotai";
 
 type FilterSectionProps = {
   data: {
@@ -10,14 +11,14 @@ type FilterSectionProps = {
 };
 
 function FilterSection({ data }: FilterSectionProps) {
-  const { selectedProject } = useFilterContext();
+  const projectId = useAtomValue(currentProjectId);
 
   const Buttons = data.map((option) => (
     <Filter.Btn
       text={`#${option.name}`}
       key={option.id}
       value={option.id}
-      isCurrent={selectedProject.name === option.name}
+      isCurrent={projectId === option.id}
     />
   ));
 
@@ -28,7 +29,7 @@ function FilterSection({ data }: FilterSectionProps) {
   return (
     <div className="flex flex-col gap-5">
       {/*  Filter dropdown */}
-      <Filter.Drop defaultValue={selectedProject.id}>{Options}</Filter.Drop>
+      <Filter.Drop defaultValue={projectId}>{Options}</Filter.Drop>
       {/*  Filter tabs */}
       <Filter.Scroll>{Buttons}</Filter.Scroll>
     </div>

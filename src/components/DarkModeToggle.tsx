@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, memo } from "react";
 import * as CIcon from "@coreui/icons-react";
 import { cilMoon, cilSun } from "@coreui/icons";
 
@@ -29,4 +29,4 @@ function DarkModeToggle() {
   );
 }
 
-export default DarkModeToggle;
+export default memo(DarkModeToggle);

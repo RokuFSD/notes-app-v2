@@ -3,6 +3,8 @@ import HeadSection from "../../../components/HeadSection";
 import ProjectsContainer from "./components/ProjectsContainer";
 import { PUBLIC_ROUTES } from "../../../../types/routes";
 
+
+
 export function Projects() {
   return (
     <>

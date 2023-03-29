@@ -1,20 +1,24 @@
 import React from "react";
 import * as Form from "../../../components/Form";
 import { ActionFunction, redirect, useNavigate } from "react-router-dom";
-import IDB from "../../../store/idb";
 import { Project } from "../../../../types/state";
+import IDB from "../../../store/idb";
+import { getDefaultStore } from "jotai";
+import { addProjectAtom } from "../../../jotai";
 
 const initialValues = {
-  title: ""
+  name: ""
 };
 
 export const action: ActionFunction = async ({ request }) => {
-  // const data = await request.formData();
-  // console.log(Object.fromEntries(data.entries()));
   const data = await request.formData();
   data.set("id", Date.now().toString());
   const project = Object.fromEntries(data.entries()) as unknown;
+
+  await getDefaultStore().set(addProjectAtom, project as Project);
+
   await IDB.addProject(project as Project);
+
   return redirect("/projects");
 };
 

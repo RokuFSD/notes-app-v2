@@ -5,11 +5,16 @@ import { PUBLIC_ROUTES } from "../../../../types/routes";
 import NotesContainer from "../../../components/NotesContainer";
 import IDB from "../../../store/idb";
 import { Project as ProjectType } from "../../../../types/state";
+import { defaultProjectAtom, setCurrentProjectId } from "../../../jotai";
+import { getDefaultStore } from "jotai";
 
 // React router loader
 export const loader: LoaderFunction = async ({ params }) => {
   const { projectId } = params;
-  return await IDB.getProject(projectId!);
+  if (!projectId) throw new Error("Project id is not defined");
+  await getDefaultStore().set(setCurrentProjectId, projectId);
+  if (projectId === "default") return getDefaultStore().get(defaultProjectAtom);
+  return await IDB.getProject(projectId);
 };
 
 export function Project() {
@@ -21,7 +26,7 @@ export function Project() {
         whereTo={PUBLIC_ROUTES.NEW_NOTE}
         context={project}
       />
-      <NotesContainer projectId={project.id} />
+      <NotesContainer />
     </>
   );
 }

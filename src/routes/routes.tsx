@@ -1,22 +1,17 @@
 import React from "react";
 import { createBrowserRouter, RouteObject } from "react-router-dom";
-import DashBoard, { loader } from "./pages/dashboard/DashBoard";
-import WithNav from "../components/Layout/WithNav";
-import FilterContext from "./pages/dashboard/context/FilterContext";
+import DashBoard from "./pages/dashboard/DashBoard";
 
 const routes: RouteObject[] = [
   {
     path: "/",
-    element: <WithNav />,
+    lazy: () => import("../components/Layout/WithNav"),
     children: [
       {
         index: true,
         element: (
-          <FilterContext>
-            <DashBoard />
-          </FilterContext>
-        ),
-        loader: loader
+          <DashBoard />
+        )
       },
       {
         path: "/projects",
@@ -51,8 +46,7 @@ const routes: RouteObject[] = [
             "./pages/new-project/Newproject"
             );
           return { Component: Newproject, action };
-        },
-        element: <div>New project</div>
+        }
       }
     ]
   }

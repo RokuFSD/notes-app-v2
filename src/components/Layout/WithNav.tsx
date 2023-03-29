@@ -2,8 +2,15 @@ import React from "react";
 import { Outlet } from "react-router-dom";
 import Navbar from "../Nav/Navbar";
 import Header from "../Header";
+import useData from "../../hooks/useData";
 
-function WithNav() {
+
+export function Component() {
+  const { loading, error } = useData();
+
+  if (loading) return <div>Loading...</div>;
+  if (error) return <div>Something went wrong</div>;
+
   return (
     <>
       <Header />
@@ -17,4 +24,4 @@ function WithNav() {
   );
 }
 
-export default WithNav;
+Component.displayName = "WithNav";

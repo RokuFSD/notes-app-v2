@@ -1,7 +1,9 @@
-import React from "react";
+import React, { memo } from "react";
 import * as CIcon from "@coreui/icons-react";
 import { cilSearch } from "@coreui/icons";
 import DarkModeToggle from "./DarkModeToggle";
+
+const SearchIcon = memo(CIcon.default)
 
 function Header() {
   return (
@@ -22,11 +24,11 @@ function Header() {
       </div>
       {/*  Search Icon */}
       <div className="flex items-center gap-4">
-        <CIcon.default icon={cilSearch} className="w-5 h-5" />
+        <SearchIcon icon={cilSearch} className="w-5 h-5" />
         <DarkModeToggle />
       </div>
     </header>
   );
 }
 
-export default Header;
+export default memo(Header);

@@ -8,11 +8,13 @@ import {
 } from "react-router-dom";
 import IDB from "../../../store/idb";
 import { Note, Project } from "../../../../types/state";
+import { getDefaultStore } from "jotai";
+import { allProjectsAtom, readWriteAllNotesAtom } from "../../../jotai";
 
 const initialValues = {
   title: "",
   content: "",
-  name: "id1" // Default all projects
+  name: "default" // Default all projects
 };
 
 export const action: ActionFunction = async ({ request }) => {
@@ -20,27 +22,25 @@ export const action: ActionFunction = async ({ request }) => {
   data.set("id", Date.now().toString());
   const note = Object.fromEntries(data.entries());
   await IDB.addNote(note as Note);
+
+  // Update notes atom
+  const store = getDefaultStore();
+  store.set(readWriteAllNotesAtom, note as Note);
+
   return redirect("/");
 };
 
 export const loader: LoaderFunction = async () => {
-  return await IDB.getProjects();
+  return getDefaultStore().get(allProjectsAtom);
 };
 
 export function Newnote() {
   const navigate = useNavigate();
+
   // Project from location
   const { state } = useLocation();
 
   const options = useLoaderData() as Project[];
-
-  // const options = !state?.id ? (
-  //   dropOptions.map((option) => (
-  //     <Form.FormOption key={option.id} name={option.name} id={option.id} />
-  //   ))
-  // ) : (
-  //   <Form.FormOption name={state.name} id={state.id} />
-  // );
 
   const content = !state?.id ? (
     options.map((option) => (
