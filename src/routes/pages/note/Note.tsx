@@ -47,7 +47,7 @@ export function Note() {
 
   return (
     <section className="h-5/6 relative">
-      <DeleteButton />
+      <DeleteButton className="absolute right-2 bottom-0" />
       <Form.Form
         initialValues={initialValues}
         method="post"

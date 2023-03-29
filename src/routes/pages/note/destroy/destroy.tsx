@@ -6,6 +6,8 @@ import { deleteNoteAtom } from "../../../../jotai/notes";
 export const action: ActionFunction = async ({ params }) => {
   const { noteId } = params;
 
+  console.log(noteId)
+
   if (!noteId) throw new Error("No note id");
   await IDB.deleteNote(noteId as string);
   getDefaultStore().set(deleteNoteAtom, noteId as string);
