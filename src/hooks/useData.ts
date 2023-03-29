@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { useSetAtom } from "jotai";
-import { fetchProjectsAtom, fetchCurrentNotesAtom } from "../jotai";
+import { fetchProjectsAtom } from "../jotai/projects";
+import { fetchCurrentNotesAtom } from "../jotai/notes";
 
 export default function useData() {
   const [loading, setLoading] = useState(true);

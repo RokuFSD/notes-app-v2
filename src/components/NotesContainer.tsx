@@ -1,7 +1,7 @@
 import React from "react";
 import NoteCard from "./NoteCard";
-import { currentNotesAtom } from "../jotai";
 import { useAtom } from "jotai";
+import { currentNotesAtom } from "../jotai/notes";
 
 function NotesContainer() {
   const [currentNotes] = useAtom(currentNotesAtom);
@@ -9,11 +9,13 @@ function NotesContainer() {
   const notes = currentNotes.map((note, idx) => (
     <NoteCard
       key={note.id}
+      id={note.id}
       title={note.title}
       content={note.content}
       createdAt={note.createdAt}
       index={idx}
       color={note.color}
+      project={note.project}
     />
   ));
 

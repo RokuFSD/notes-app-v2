@@ -12,3 +12,14 @@ export type Note = {
   createdAt: string;
   color: string;
 }
+
+export type IdbStore = {
+  projects: {
+    key: string;
+    value: Project
+  },
+  notes: {
+    key: string;
+    value: Note
+  }
+}

@@ -9,7 +9,8 @@ import {
 import IDB from "../../../store/idb";
 import { Note, Project } from "../../../../types/state";
 import { getDefaultStore } from "jotai";
-import { allProjectsAtom, readWriteAllNotesAtom } from "../../../jotai";
+import { allProjectsAtom } from "../../../jotai/projects";
+import { addNoteAtom } from "../../../jotai/notes";
 import { generateRandomColor } from "../../../utils/randomColor";
 
 const initialValues = {
@@ -29,7 +30,7 @@ export const action: ActionFunction = async ({ request }) => {
 
   // Update notes atom
   const store = getDefaultStore();
-  store.set(readWriteAllNotesAtom, note as Note);
+  store.set(addNoteAtom, note as Note);
 
   return redirect("/");
 };

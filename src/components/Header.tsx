@@ -3,7 +3,7 @@ import * as CIcon from "@coreui/icons-react";
 import { cilSearch } from "@coreui/icons";
 import DarkModeToggle from "./DarkModeToggle";
 
-const SearchIcon = memo(CIcon.default)
+const SearchIcon = memo(CIcon.default);
 
 function Header() {
   return (
@@ -18,7 +18,7 @@ function Header() {
       </div>
       {/*  Profile name */}
       <div className="flex items-center basis-10/12">
-        <h2 className="text-sm dark:text-zinc-400 text-zinc-400 font-semibold">
+        <h2 className="text-sm text-zinc-400 font-semibold">
           Welcome back <span className="text-zinc-800 dark:text-zinc-100">Chad</span>
         </h2>
       </div>

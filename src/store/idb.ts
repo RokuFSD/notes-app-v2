@@ -1,18 +1,9 @@
 import * as idb from "idb";
-import { Note, Project } from "../../types/state";
+import { IdbStore, Note, Project } from "../../types/state";
 
 export default class IDB {
-  static async openDB() {
-    return await idb.openDB<{
-      projects: {
-        key: string;
-        value: Project
-      },
-      notes: {
-        key: string;
-        value: Note
-      }
-    }>("np-app", 1, {
+  private static async openDB() {
+    return await idb.openDB<IdbStore>("np-app", 1, {
       upgrade(db) {
         db.createObjectStore("projects", {
           keyPath: "id"
@@ -22,6 +13,12 @@ export default class IDB {
         });
       }
     });
+  }
+
+  private static async initTx() {
+    const db = await this.openDB();
+    const tx = db.transaction(["projects", "notes"], "readwrite");
+    return { projectStore: tx.objectStore("projects"), noteStore: tx.objectStore("notes") };
   }
 
   static async getProjects() {
@@ -64,6 +61,13 @@ export default class IDB {
     await db.add("projects", project);
   }
 
+  static async getNote(id: string) {
+    const db = await this.openDB();
+    const note = await db.get("notes", id);
+    if (!note) throw new Error("Note not found");
+    return note;
+  }
+
   static async getProject(id: string) {
     const db = await this.openDB();
     const project = await db.get("projects", id);
@@ -79,17 +83,52 @@ export default class IDB {
   }
 
   static async addNote(note: Note) {
-    const db = await this.openDB();
-    // Save to project
+    const { projectStore, noteStore } = await this.initTx();
+
+    // If is the default project
     if (note.project === "default") {
-      await db.add("notes", note);
+      await noteStore.add(note);
       return;
     }
-    const project = await db.get("projects", note.project);
+    //   Save to project
+    const project = await projectStore.get(note.project);
     if (!project) throw new Error("Project not found");
     project.notes.push(note);
-    await db.put("projects", project);
-    // Save to notes
-    await db.add("notes", note);
+    await projectStore.put(project);
+    //   Save to notes
+    await noteStore.add(note);
+
+  }
+
+  static async updateNote(note: Note) {
+    const { projectStore, noteStore } = await this.initTx();
+
+    if (note.project === "default") {
+      await noteStore.put(note);
+      return;
+    }
+
+    const project = await projectStore.get(note.project);
+    if (!project) throw new Error("Project not found");
+    const index = project.notes.findIndex((n) => n.id === note.id);
+    project.notes[index] = note;
+    await projectStore.put(project);
+  }
+
+  static async deleteNote(noteId: string) {
+    const { projectStore, noteStore } = await this.initTx();
+
+    const note = await noteStore.get(noteId);
+    if (!note) throw new Error("Note not found");
+    await noteStore.delete(noteId);
+
+    if (note.project === "default") return;
+
+    const project = await projectStore.get(note.project);
+    if (!project) throw new Error("Project not found");
+    const index = project.notes.findIndex((n) => n.id === note.id);
+    project.notes.splice(index, 1);
+    await projectStore.put(project);
+
   }
 }

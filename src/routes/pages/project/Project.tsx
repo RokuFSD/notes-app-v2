@@ -5,7 +5,7 @@ import { PUBLIC_ROUTES } from "../../../../types/routes";
 import NotesContainer from "../../../components/NotesContainer";
 import IDB from "../../../store/idb";
 import { Project as ProjectType } from "../../../../types/state";
-import { defaultProjectAtom, setCurrentProjectId } from "../../../jotai";
+import { defaultProjectAtom, setCurrentProjectId } from "../../../jotai/projects";
 import { getDefaultStore } from "jotai";
 
 // React router loader

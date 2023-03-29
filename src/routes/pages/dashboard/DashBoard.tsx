@@ -5,7 +5,7 @@ import FilterSection from "./components/filter/FilterSection";
 import NotesContainer from "../../../components/NotesContainer";
 import { PUBLIC_ROUTES } from "../../../../types/routes";
 import { useAtomValue } from "jotai";
-import { allProjectsAtom } from "../../../jotai";
+import {allProjectsAtom} from "../../../jotai/projects";
 
 function DashBoard() {
   const projects = useAtomValue(allProjectsAtom);

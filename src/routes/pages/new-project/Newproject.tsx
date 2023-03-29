@@ -4,7 +4,7 @@ import { ActionFunction, redirect, useNavigate } from "react-router-dom";
 import { Project } from "../../../../types/state";
 import IDB from "../../../store/idb";
 import { getDefaultStore } from "jotai";
-import { addProjectAtom } from "../../../jotai";
+import { addProjectAtom } from "../../../jotai/projects";
 
 const initialValues = {
   name: ""

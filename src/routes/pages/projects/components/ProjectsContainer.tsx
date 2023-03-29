@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { useAtomValue } from "jotai";
-import { allProjectsAtom } from "../../../../jotai";
+import {allProjectsAtom} from "../../../../jotai/projects";
 
 function ProjectsContainer() {
   const value = useAtomValue(allProjectsAtom);

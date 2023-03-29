@@ -40,6 +40,20 @@ const routes: RouteObject[] = [
         }
       },
       {
+        path: "/notes/:noteId",
+        async lazy() {
+          const { Note, action } = await import("./pages/note/Note");
+          return { Component: Note, action };
+        }
+      },
+      {
+        path: "/notes/:noteId/destroy",
+        async lazy() {
+          const { action } = await import("./pages/note/destroy/destroy");
+          return { action };
+        }
+      },
+      {
         path: "/projects/new",
         async lazy() {
           const { Newproject, action } = await import(

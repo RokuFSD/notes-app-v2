@@ -1,6 +1,6 @@
 import React, { ReactNode } from "react";
 import { useSetAtom } from "jotai";
-import { setCurrentProjectId } from "../../../../../jotai";
+import { setCurrentProjectId } from "../../../../../jotai/projects";
 
 type DropProps = {
   children: ReactNode;

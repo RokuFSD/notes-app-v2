@@ -1,7 +1,7 @@
 import React, { memo } from "react";
 import Button from "../../../../../components/Button";
 import { useSetAtom } from "jotai";
-import { setCurrentProjectId } from "../../../../../jotai";
+import { setCurrentProjectId } from "../../../../../jotai/projects";
 
 type BtnProps = {
   text: string;

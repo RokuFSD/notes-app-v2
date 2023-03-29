@@ -1,7 +1,7 @@
 import React from "react";
 import * as Filter from "./index";
 import { useAtomValue } from "jotai";
-import { currentProjectId } from "../../../../../jotai";
+import { currentProjectId } from "../../../../../jotai/projects";
 
 type FilterSectionProps = {
   data: {
