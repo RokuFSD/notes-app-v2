@@ -4,27 +4,22 @@ type NoteCardProps = {
   title: string;
   content: string;
   createdAt: string;
-  //   This is temporal, maybe when we fetch each card in a future this is no more on props
   index: number;
+  color: string
 };
 
-const colors: [number, string][] = [
-  [1, "bg-blue-200"],
-  [2, "bg-green-200"],
-  [3, "bg-violet-300"]
-];
-
-const colorsMap = new Map(colors);
 
 function NoteCard({
                     title,
                     content,
                     createdAt,
+                    color,
                     index
                   }: NoteCardProps) {
+
   return (
     <div
-      className={`card drop-shadow-2xl flex flex-col font-fm p-2 border-2 
+      className={`${color} card shadow-2xl flex flex-col font-fm p-2 border-2 
       border-zinc-700 rounded-2xl break-words -rotate-6 h-48 gap-8
       overflow-clip
       ${index % 2 === 1 && "-ml-1"}

@@ -10,6 +10,7 @@ import IDB from "../../../store/idb";
 import { Note, Project } from "../../../../types/state";
 import { getDefaultStore } from "jotai";
 import { allProjectsAtom, readWriteAllNotesAtom } from "../../../jotai";
+import { generateRandomColor } from "../../../utils/randomColor";
 
 const initialValues = {
   title: "",
@@ -17,9 +18,11 @@ const initialValues = {
   name: "default" // Default all projects
 };
 
+
 export const action: ActionFunction = async ({ request }) => {
   const data = await request.formData();
   data.set("id", Date.now().toString());
+  data.set("color", generateRandomColor());
   const note = Object.fromEntries(data.entries());
   await IDB.addNote(note as Note);
 

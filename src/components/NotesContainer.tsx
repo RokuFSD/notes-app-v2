@@ -13,6 +13,7 @@ function NotesContainer() {
       content={note.content}
       createdAt={note.createdAt}
       index={idx}
+      color={note.color}
     />
   ));
 
