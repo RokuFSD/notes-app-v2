@@ -10,7 +10,6 @@ type HeadSectionProps = {
   context?: { [key: string]: unknown };
 };
 
-// TODO: This is gonna to change in base of what to create
 function HeadSection({ title, whereTo, context }: HeadSectionProps) {
   const link = context ? { to: whereTo, state: context } : { to: whereTo };
 
@@ -20,7 +19,7 @@ function HeadSection({ title, whereTo, context }: HeadSectionProps) {
         {title}
       </h2>
       <Link {...link}>
-        <Button text="+" className="w-10 h-10" />
+        <Button text="+" className="w-10 h-10 dark:text-zinc-100" />
       </Link>
     </div>
   );

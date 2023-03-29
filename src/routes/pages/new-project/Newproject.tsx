@@ -34,18 +34,20 @@ export function Newproject() {
       <Form.Form
         initialValues={initialValues}
         method="post"
-        className="w-full h-min-content grid grid-cols-1 grid-rows-6 border border-slate-700 rounded-2xl overflow-hidden"
+        className="w-full h-min-content grid grid-cols-1 grid-rows-6 border border-slate-700 rounded-2xl overflow-hidden
+        dark:bg-zinc-900 dark:border-zinc-400
+        "
       >
         <Form.FormInput
           name="name"
           type="text"
           placeholder="Title..."
           required
-          className="row-start-1 row-span-full font-fm text-2xl p-2 bg-transparent font-semibold"
+          className="row-start-1 row-span-full font-fm text-2xl p-2 bg-transparent font-semibold dark:text-zinc-100"
         />
-        <div className="flex justify-around items-center absolute top-full w-full mt-2 h-14">
+        <div className="flex justify-around items-center absolute top-full w-full mt-2 h-14 gap-2">
           <button
-            className="w-1/2 h-full title text-xl"
+            className="w-1/2 h-full title text-xl dark:bg-zinc-100 rounded-2xl"
             onClick={() => goBack()}
           >
             Cancel

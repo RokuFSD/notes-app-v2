@@ -15,7 +15,7 @@ const icons = {
 };
 
 const activeStyle =
-  "relative bg-gradient-to-bl w-12 h-12 flex items-center justify-center rounded-full from-blue-200 to-blue-400";
+  "relative bg-gradient-to-bl w-12 h-12 flex items-center justify-center rounded-full from-blue-200 to-blue-300 dark:from-zinc-400 dark:to-zinc-800";
 
 const NavBarIcon = memo(CIcon.default);
 
@@ -25,7 +25,7 @@ function NavbarItem({ label, to }: NavbarItemProps) {
   return (
     <li
       key={label}
-      className="rounded-full w-12 h-12 flex items-center justify-center from-blue-300 to-blue-500"
+      className="rounded-full w-12 h-12 flex items-center justify-center from-blue-300 to-blue-500 dark:text-zinc-100"
     >
       <NavLink
         to={to}

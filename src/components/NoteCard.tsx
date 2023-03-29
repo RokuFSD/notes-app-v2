@@ -22,6 +22,8 @@ function NoteCard({
       className={`${color} card shadow-2xl flex flex-col font-fm p-2 border-2 
       border-zinc-700 rounded-2xl break-words -rotate-6 h-48 gap-8
       overflow-clip
+      dark:bg-zinc-100
+      dark:border-zinc-300
       ${index % 2 === 1 && "-ml-1"}
       ${index > 1 && index % 2 === 1 && "-mt-1 -ml-3"}
       ${index > 1 && index % 2 === 0 && "mt-1"}
@@ -30,7 +32,7 @@ function NoteCard({
     >
       <div>
         <h2 className="font-extrabold text-lg">{title}</h2>
-        <span>{createdAt}</span>
+        <span className="text-sm text-zinc-600 font-semibold dark:text-zinc-400">{createdAt}</span>
       </div>
       <p className="text-md opacity-60">{content}</p>
     </div>

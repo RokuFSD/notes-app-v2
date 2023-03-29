@@ -12,12 +12,13 @@ const baseClass = [
   "rounded-lg",
   "border-slate-700",
   "dark:border-slate-200",
+  "dark:text-zinc-100"
 ];
 
 const variants = {
   primary: [] as string[],
   cancel: [] as string[],
-  active: ["bg-lime-300"],
+  active: ["bg-lime-300", "dark:text-zinc-800"]
 };
 
 function Button({ text, variant, className, ...props }: ButtonComponents) {

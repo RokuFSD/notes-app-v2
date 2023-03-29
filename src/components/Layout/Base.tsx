@@ -6,7 +6,7 @@ export function Component() {
   return (
     <>
       <Header />
-      <main className="bg-slate-100 dark:bg-zinc-700 p-4 gap-10 grid grid-cols-1">
+      <main className="bg-slate-100 dark:bg-zinc-900 p-4 gap-10 grid grid-cols-1">
         <Outlet />
       </main>
     </>

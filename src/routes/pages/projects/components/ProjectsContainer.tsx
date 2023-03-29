@@ -14,11 +14,14 @@ function ProjectsContainer() {
       bg-white
       rounded-2xl break-words h-20
       relative
+      dark:bg-zinc-700
+      dark:text-zinc-100
       "
       >
         {project.name}
         <div
-          className="absolute bottom-3 right-4 font-fm bg-gradient-to-tl from-zinc-300 to-transparent w-8 rounded-full flex items-center justify-center shadow-lg">
+          className="absolute bottom-3 right-4 font-fm bg-gradient-to-tl from-zinc-300 to-transparent w-8 rounded-full flex items-center justify-center shadow-lg
+          dark:from-zinc-600 dark:to-zinc-700">
           {project.notes.length}
         </div>
       </div>
