@@ -1,5 +1,5 @@
 import React, { ButtonHTMLAttributes } from "react";
-import { classSelector } from "../utils/classSelector";
+import { classSelector } from "../lib/utils/classSelector";
 
 type ButtonComponents = {
   text: string;

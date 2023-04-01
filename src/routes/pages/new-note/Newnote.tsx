@@ -11,7 +11,7 @@ import { Note, Project } from "../../../../types/state";
 import { getDefaultStore } from "jotai";
 import { allProjectsAtom } from "../../../jotai/projects";
 import { addNoteAtom } from "../../../jotai/notes";
-import { generateRandomColor } from "../../../utils/randomColor";
+import { generateRandomColor } from "../../../lib/utils/randomColor";
 
 const initialValues = {
   title: "",

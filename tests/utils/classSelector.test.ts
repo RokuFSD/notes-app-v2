@@ -1,4 +1,4 @@
-import { classSelector } from "../../src/utils/classSelector";
+import { classSelector } from "../../src/lib/utils/classSelector";
 
 describe("Class selector util", () => {
   it("Should return the correct value", () => {

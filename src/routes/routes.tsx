@@ -1,11 +1,12 @@
 import React from "react";
 import { createBrowserRouter, RouteObject } from "react-router-dom";
+import Root from "../components/Layout/Root";
 import DashBoard from "./pages/dashboard/DashBoard";
 
 const routes: RouteObject[] = [
   {
     path: "/",
-    lazy: () => import("../components/Layout/WithNav"),
+    element: <Root withNav />,
     children: [
       {
         index: true,
@@ -30,7 +31,7 @@ const routes: RouteObject[] = [
     ]
   },
   {
-    lazy: () => import("../components/Layout/Base"),
+    element: <Root/>,
     children: [
       {
         path: "/notes/new",

@@ -1,8 +1,8 @@
 import React from "react";
-import { Outlet } from "react-router-dom";
 import Navbar from "../Nav/Navbar";
 import Header from "../Header";
 import useData from "../../hooks/useData";
+import { Outlet } from "react-router-dom";
 
 
 export function Component() {
