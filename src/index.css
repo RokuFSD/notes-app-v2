@@ -18,9 +18,14 @@
   #root {
     min-height: -webkit-fill-available;
     min-height: 100vh;
-    display: grid;
-    grid-template-columns: 100%;
-    grid-template-rows: fit-content(100%) 1fr;
+    /*display: grid;*/
+    /*grid-template-columns: 100%;*/
+    /*grid-template-rows: fit-content(100%) 1fr;*/
+    display: flex;
+    flex-direction: column;
+    justify-content: stretch;
+    align-items: stretch;
+
   }
 
   input,

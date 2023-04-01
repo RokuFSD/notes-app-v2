@@ -28,10 +28,11 @@ const routes: RouteObject[] = [
           return { Component: Project, loader };
         }
       }
+
     ]
   },
   {
-    element: <Root/>,
+    element: <Root />,
     children: [
       {
         path: "/notes/new",
@@ -64,7 +65,20 @@ const routes: RouteObject[] = [
         }
       }
     ]
+  },
+  {
+    element: <Root withHeader={false} withNav />,
+    children: [
+      {
+        path: "/profile",
+        async lazy() {
+          const { Profile } = await import("./pages/profile/Profile");
+          return { Component: Profile };
+        }
+      }
+    ]
   }
+
 ];
 
 export const router = createBrowserRouter(routes);

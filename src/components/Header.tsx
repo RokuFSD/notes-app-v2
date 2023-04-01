@@ -2,12 +2,18 @@ import React, { memo } from "react";
 import * as CIcon from "@coreui/icons-react";
 import { cilSearch } from "@coreui/icons";
 import DarkModeToggle from "./DarkModeToggle";
+import { useAtomValue } from "jotai";
+import { userAtom } from "../jotai/user";
 
 const SearchIcon = memo(CIcon.default);
 
 function Header() {
+  const user = useAtomValue(userAtom);
+
+  console.log(user);
+
   return (
-    <header className="flex bg-slate-100 p-5 pb-0 justify-start gap-2 dark:bg-zinc-900">
+    <header className="flex bg-slate-100 p-5 pb-0 justify-start gap-2 dark:bg-zinc-900 h-20">
       {/*  Profile picture */}
       <div className="flex justify-center items-center w-12">
         <img

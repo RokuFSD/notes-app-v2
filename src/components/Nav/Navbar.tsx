@@ -4,7 +4,7 @@ import NavbarItem from "./NavbarItem";
 const links: { label: string; href: string }[] = [
   { label: "Projects", href: "/projects" },
   { label: "Home", href: "/" },
-  { label: "User", href: "/me" }
+  { label: "User", href: "/profile" }
 ];
 
 function Navbar() {

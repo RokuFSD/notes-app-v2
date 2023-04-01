@@ -4,15 +4,18 @@ import Navbar from "../Nav/Navbar";
 import useData from "../../hooks/useData";
 import { Outlet } from "react-router-dom";
 import { classSelector } from "../../lib/utils/classSelector";
+import useAuth from "../../hooks/useAuth";
 
 type RootProps = {
   withNav?: boolean;
+  withHeader?: boolean;
 }
 
 const baseClass = [
   "bg-slate-100",
   "dark:bg-zinc-900",
-  "gap-10"
+  "gap-10",
+  "flex-grow"
 ];
 
 const variants = {
@@ -31,15 +34,17 @@ const variants = {
 
 const classes = classSelector(baseClass, variants);
 
-export default function Root({ withNav = false }: RootProps) {
+export default function Root({ withNav = false, withHeader = true }: RootProps) {
   const { loading, error } = useData();
+  const { loading: authLoading } = useAuth();
 
-  if (loading) return <div>Loading...</div>;
+
+  if (loading || authLoading) return <div>Loading...</div>;
   if (error) return <div>Something went wrong</div>;
 
   return (
     <>
-      <Header />
+      {withHeader && <Header />}
       <main className={classes(withNav ? "withNav" : "base")}>
         <Outlet />
       </main>
