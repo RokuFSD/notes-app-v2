@@ -38,3 +38,4 @@ export const setCurrentProjectId = atom(null, async (get, set, projectId: string
   const notes = await IDB.getProjectNotes(projectId);
   set(currentNotesAtom, notes);
 });
+

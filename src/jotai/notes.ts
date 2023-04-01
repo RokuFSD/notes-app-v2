@@ -50,3 +50,4 @@ export const updateNoteAtom = atom(null, (get, set, note: Note) => {
     set(allProjectsAtom, get(allProjectsAtom).map((p) => p.id === note.project ? project : p));
   }
 });
+
