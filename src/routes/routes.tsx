@@ -1,7 +1,8 @@
 import React from "react";
-import { createBrowserRouter, RouteObject } from "react-router-dom";
 import Root from "../components/Layout/Root";
 import DashBoard from "./pages/dashboard/DashBoard";
+import { Projects } from "./pages/projects/Projects";
+import { createBrowserRouter, RouteObject } from "react-router-dom";
 
 const routes: RouteObject[] = [
   {
@@ -10,16 +11,11 @@ const routes: RouteObject[] = [
     children: [
       {
         index: true,
-        element: (
-          <DashBoard />
-        )
+        element: <DashBoard />
       },
       {
         path: "/projects",
-        async lazy() {
-          const { Projects } = await import("./pages/projects/Projects");
-          return { Component: Projects };
-        }
+        element: <Projects />
       },
       {
         path: "/projects/:projectId",
@@ -28,7 +24,6 @@ const routes: RouteObject[] = [
           return { Component: Project, loader };
         }
       }
-
     ]
   },
   {

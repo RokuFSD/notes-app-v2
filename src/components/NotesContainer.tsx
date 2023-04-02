@@ -1,12 +1,25 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import NoteCard from "./NoteCard";
 import { useAtom } from "jotai";
-import { currentNotesAtom } from "../jotai/notes";
+import { Note } from "../../types/state";
+import { allNotesAtom } from "../jotai/notes";
 
-function NotesContainer() {
-  const [currentNotes] = useAtom(currentNotesAtom);
 
-  const notes = currentNotes.map((note, idx) => (
+type NotesContainerProps = {
+  projectId: string
+}
+
+function NotesContainer({ projectId }: NotesContainerProps) {
+  const [allNotes] = useAtom(allNotesAtom);
+  const [filteredNotes, setFilteredNotes] = useState<Note[]>([]);
+
+  useEffect(() => {
+    if (projectId === "default") return setFilteredNotes(allNotes);
+    const filteredNotes = allNotes.filter(note => note.project === projectId);
+    setFilteredNotes(filteredNotes);
+  }, [allNotes, projectId]);
+
+  const notes = filteredNotes.map((note, idx) => (
     <NoteCard
       key={note.id}
       id={note.id}

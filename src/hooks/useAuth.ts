@@ -14,8 +14,8 @@ export default function useAuth() {
     .then(() => {
       setLoading(false);
     }).catch((error) => {
-      console.log(error);
       setUser(null);
+      console.error(error);
     });
   }
 
@@ -34,8 +34,8 @@ export default function useAuth() {
     }
     const unsubscribe = auth.onAuthStateChanged((fireUser) => {
       if (fireUser) {
-        const { uid, displayName } = fireUser;
-        setUser({ id: uid, name: displayName });
+        const { uid, displayName, photoURL } = fireUser;
+        setUser({ id: uid, name: displayName, photoURL });
         setLoading(false);
       }
       setLoading(false);

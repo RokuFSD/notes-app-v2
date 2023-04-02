@@ -1,10 +1,13 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Header from "../Header";
 import Navbar from "../Nav/Navbar";
 import useData from "../../hooks/useData";
-import { Outlet } from "react-router-dom";
-import { classSelector } from "../../lib/utils/classSelector";
 import useAuth from "../../hooks/useAuth";
+import { Outlet } from "react-router-dom";
+import { onlineAtom } from "../../jotai/user";
+import { loadingAtom } from "../../jotai";
+import { useAtomValue, useSetAtom } from "jotai";
+import { classSelector } from "../../lib/utils/classSelector";
 
 type RootProps = {
   withNav?: boolean;
@@ -34,13 +37,34 @@ const variants = {
 
 const classes = classSelector(baseClass, variants);
 
-export default function Root({ withNav = false, withHeader = true }: RootProps) {
-  const { loading, error } = useData();
-  const { loading: authLoading } = useAuth();
 
+export default function Root({ withNav = false, withHeader = true }: RootProps) {
+  useData();
+  const loading = useAtomValue(loadingAtom);
+  const { loading: authLoading } = useAuth();
+  const setOnline = useSetAtom(onlineAtom);
+
+  function handleOnline() {
+    setOnline(true);
+  }
+
+  function handleOffline() {
+    setOnline(false);
+  }
+
+  useEffect(() => {
+    window.addEventListener("online", handleOnline);
+    window.addEventListener("offline", handleOffline);
+
+    return () => {
+      window.removeEventListener("online", handleOnline);
+      window.removeEventListener("offline", handleOffline);
+    };
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   if (loading || authLoading) return <div>Loading...</div>;
-  if (error) return <div>Something went wrong</div>;
 
   return (
     <>

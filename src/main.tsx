@@ -9,17 +9,27 @@ import { registerSW } from "virtual:pwa-register";
 // TODO: Make this the react way
 const updateSW = registerSW({
   onNeedRefresh() {
-    const snack = document.createElement('div')
-    snack.innerHTML = 'A new version of the app is available. <button>Update</button>'
-    snack.addEventListener('click', () => {
-      window.location.reload()
-    })
-    document.body.appendChild(snack)
+    console.log("Need refresh");
+    const snack = document.createElement("div");
+    snack.innerHTML = "A new version of the app is available. <button>Update</button>";
+    snack.style.position = "absolute";
+    snack.style.bottom = "20px";
+    snack.style.left = "20px";
+    snack.style.padding = "10px";
+    snack.style.backgroundColor = "#fff";
+    snack.style.border = "1px solid #ccc";
+    snack.style.borderRadius = "4px";
+    snack.style.zIndex = "9999";
+    snack.addEventListener("click", () => {
+      window.location.reload();
+    });
+    const root = document.getElementById("root") as HTMLElement;
+    root.appendChild(snack);
   },
   onOfflineReady() {
     const prompt = document.createElement("div");
     prompt.innerHTML = "Ready to work offline. Click OK to continue.";
-    prompt.style.position = "fixed";
+    prompt.style.position = "absolute";
     prompt.style.bottom = "20px";
     prompt.style.left = "20px";
     prompt.style.padding = "10px";
@@ -36,12 +46,14 @@ const updateSW = registerSW({
     });
     prompt.appendChild(okButton);
 
-    document.body.appendChild(prompt);
+
+    const root = document.getElementById("root") as HTMLElement;
+    root.appendChild(prompt);
 
     function hidePrompt() {
       document.body.removeChild(prompt);
     }
-  },
+  }
 });
 
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(

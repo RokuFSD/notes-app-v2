@@ -5,9 +5,10 @@ import FilterSection from "./components/filter/FilterSection";
 import NotesContainer from "../../../components/NotesContainer";
 import { PUBLIC_ROUTES } from "../../../../types/routes";
 import { useAtomValue } from "jotai";
-import {allProjectsAtom} from "../../../jotai/projects";
+import { allProjectsAtom, currentProjectId } from "../../../jotai/projects";
 
 function DashBoard() {
+  const projectId = useAtomValue(currentProjectId);
   const projects = useAtomValue(allProjectsAtom);
   return (
     <>
@@ -16,10 +17,10 @@ function DashBoard() {
 
       {/* Filter section */}
       {/* TODO: The selector of the view here*/}
-      <FilterSection data={projects} />
+      <FilterSection data={Array.from(projects.values())} />
       {/* Notes */}
       <ViewContext>
-        <NotesContainer />
+        <NotesContainer projectId={projectId} />
       </ViewContext>
     </>
   );

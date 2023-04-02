@@ -36,7 +36,7 @@ export const action: ActionFunction = async ({ request }) => {
 };
 
 export const loader: LoaderFunction = async () => {
-  return getDefaultStore().get(allProjectsAtom);
+  return Array.from(getDefaultStore().get(allProjectsAtom).values());
 };
 
 export function Newnote() {

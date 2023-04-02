@@ -43,11 +43,8 @@ export default defineConfig({
     react(),
     VitePWA({
       scope: "/",
-      registerType: "prompt",
       workbox: {
         globPatterns: ["**/*.{js,css,html,ico,png,svg}"],
-        clientsClaim: true,
-        skipWaiting: true
       },
       manifest: {
         name: "NP App",
