@@ -9,7 +9,8 @@
     "preview": "vite preview",
     "test": "vitest",
     "coverage": "vitest run --coverage",
-    "lint": "eslint --ext .js,.jsx,.ts,.tsx src"
+    "lint": "eslint --ext .js,.jsx,.ts,.tsx src",
+    "codegen": "graphql-codegen --config codegen.ts"
   },
   "dependencies": {
     "@apollo/client": "^3.7.10",
@@ -24,6 +25,12 @@
     "react-router-dom": "^6.9.0"
   },
   "devDependencies": {
+    "@graphql-codegen/cli": "3.2.2",
+    "@graphql-codegen/client-preset": "2.1.1",
+    "@graphql-codegen/introspection": "3.0.1",
+    "@graphql-codegen/typescript": "^3.0.2",
+    "@graphql-codegen/typescript-operations": "^3.0.2",
+    "@graphql-codegen/typescript-react-apollo": "^3.3.7",
     "@testing-library/dom": "^9.0.1",
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^14.0.0",

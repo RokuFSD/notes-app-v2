@@ -6,7 +6,7 @@ import { currentProjectId } from "../../../../../jotai/projects";
 type FilterSectionProps = {
   data: {
     id: string;
-    name: string;
+    title: string;
   }[];
 };
 
@@ -15,7 +15,7 @@ function FilterSection({ data }: FilterSectionProps) {
 
   const Buttons = data.map((option) => (
     <Filter.Btn
-      text={`#${option.name}`}
+      text={`#${option.title}`}
       key={option.id}
       value={option.id}
       isCurrent={projectId === option.id}
@@ -23,7 +23,7 @@ function FilterSection({ data }: FilterSectionProps) {
   ));
 
   const Options = data.map((option) => (
-    <Filter.Option key={option.id} name={option.name} id={option.id} />
+    <Filter.Option key={option.id} name={option.title} id={option.id} />
   ));
 
   return (

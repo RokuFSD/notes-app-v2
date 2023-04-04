@@ -24,7 +24,8 @@ export const action: ActionFunction = async ({ request }) => {
   const data = await request.formData();
   data.set("id", Date.now().toString());
   data.set("color", generateRandomColor());
-  data.set("createdAt", new Date().toLocaleDateString());
+  data.set("createdDate", new Date().toString());
+  data.set("updatedDate", new Date().toString());
   const note = Object.fromEntries(data.entries());
   await IDB.addNote(note as Note);
 
@@ -49,10 +50,10 @@ export function Newnote() {
 
   const content = !state?.id ? (
     options.map((option) => (
-      <Form.FormOption key={option.id} name={option.name} id={option.id} />
+      <Form.FormOption key={option.id} name={option.title} id={option.id} />
     ))
   ) : (
-    <Form.FormOption name={state.name} id={state.id} />
+    <Form.FormOption name={state.title} id={state.id} />
   );
 
   function goBack() {

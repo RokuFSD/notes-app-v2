@@ -5,8 +5,10 @@ import IDB from "../store/idb";
 
 export const defaultProjectAtom = atom<Project>({
   id: "default",
-  name: "All",
-  notes: await IDB.getNotes()
+  title: "All",
+  notes: await IDB.getNotes(),
+  updatedDate: new Date(),
+  createdDate: new Date()
 });
 
 const projectMap = new Map<string, Project>();

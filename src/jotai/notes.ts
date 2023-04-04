@@ -13,14 +13,14 @@ export const addNoteAtom = atom((get) => get(allNotesAtom), (get, set, note: Not
   if (projectId !== "default") {
     const defaultProject = projects.get("default");
     if (!defaultProject) return console.error("Default project not found?");
-    defaultProject.notes.push(note);
+    defaultProject.notes?.push(note);
     set(allProjectsAtom, projects.set("default", defaultProject));
   }
 
   // We add the note to the project it belongs to
   const project = projects.get(projectId);
   if (project) {
-    project.notes.push(note);
+    project.notes?.push(note);
     set(allProjectsAtom, projects.set(projectId, project));
   }
 
@@ -36,11 +36,11 @@ export const deleteNoteAtom = atom(null, (get, set, noteId: string) => {
 
   if (note?.project !== "default") {
     const defaultProject = get(allProjectsAtom).get("default")!;
-    defaultProject.notes = defaultProject.notes.filter((n) => n.id !== noteId);
+    defaultProject.notes = defaultProject.notes?.filter((n) => n.id !== noteId);
     set(allProjectsAtom, get(allProjectsAtom).set("default", defaultProject));
   }
 
-  project.notes = project.notes.filter((n) => n.id !== noteId);
+  project.notes = project.notes?.filter((n) => n.id !== noteId);
   set(allProjectsAtom, get(allProjectsAtom).set(project.id, project));
 });
 

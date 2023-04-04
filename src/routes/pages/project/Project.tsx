@@ -18,10 +18,11 @@ export const loader: LoaderFunction = async ({ params }) => {
 
 export function Project() {
   const project = useLoaderData() as ProjectType;
+  console.log(project)
   return (
     <>
       <HeadSection
-        title={project.name}
+        title={project.title}
         whereTo={PUBLIC_ROUTES.NEW_NOTE}
         context={project}
       />

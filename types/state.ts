@@ -1,16 +1,11 @@
-export type Project = {
-  id: string;
-  name: string;
+import { NoteEntity, ProjectEntity } from "../src/generated/generated.graphql";
+
+export type Project = Omit<ProjectEntity, "notes" | "__typename" | "user"> & {
   notes: Note[];
 }
 
-export type Note = {
-  id: string;
+export type Note = Omit<NoteEntity, "project" | "user" | "__typename"> & {
   project: string;
-  title: string;
-  content: string;
-  createdAt: string;
-  color: string;
 }
 
 export type IdbStore = {

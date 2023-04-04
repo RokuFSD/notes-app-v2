@@ -30,7 +30,8 @@
     "tests/setup.ts",
     ".eslintrc.json",
     "vite.config.ts",
-    "types"
+    "types",
+    "codegen.ts"
   ],
   "references": [
     {

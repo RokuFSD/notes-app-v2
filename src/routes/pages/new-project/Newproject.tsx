@@ -39,7 +39,7 @@ export function Newproject() {
         "
       >
         <Form.FormInput
-          name="name"
+          name="title"
           type="text"
           placeholder="Title..."
           required

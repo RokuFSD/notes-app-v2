@@ -1,7 +1,9 @@
 import * as idb from "idb";
 import { IdbStore, Note, Project } from "../../types/state";
 
-export default class IDB {
+export type IdbInstance = typeof IDB
+
+export default abstract class IDB {
   private static async openDB() {
     return await idb.openDB<IdbStore>("np-app", 1, {
       upgrade(db) {

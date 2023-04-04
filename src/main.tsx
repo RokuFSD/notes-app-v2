@@ -4,6 +4,8 @@ import "./index.css";
 import { router } from "./routes/routes";
 import { RouterProvider } from "react-router-dom";
 import { registerSW } from "virtual:pwa-register";
+import { ApolloProvider } from "@apollo/client";
+import client from "./lib/client/apollo";
 
 
 // TODO: Make this the react way
@@ -58,6 +60,9 @@ const updateSW = registerSW({
 
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
   <React.StrictMode>
-    <RouterProvider router={router} />
+    <ApolloProvider client={client}>
+      <RouterProvider router={router} />
+    </ApolloProvider>
   </React.StrictMode>
-);
+)
+;
