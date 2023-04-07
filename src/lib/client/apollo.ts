@@ -1,10 +1,14 @@
 import { setContext } from "@apollo/client/link/context";
 import { ApolloClient, HttpLink, InMemoryCache, ApolloLink } from "@apollo/client";
+import { auth } from "../firebase/init";
 
-const authLink = setContext((_, { headers }) => {
-  // TODO: Add firebase auth token
+const authLink = setContext(async (_, { headers }) => {
+  const token = await auth.currentUser?.getIdToken();
   return {
-    headers
+    headers: {
+      ...headers,
+      authorization: token ? `Bearer ${token}` : ""
+    }
   };
 });
 

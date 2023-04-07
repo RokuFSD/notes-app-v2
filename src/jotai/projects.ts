@@ -17,10 +17,9 @@ projectMap.set("default", appStore.get(defaultProjectAtom));
 
 export const currentProjectId = atom<string>("default");
 
-export const allProjectsAtom = atom<typeof projectMap>(projectMap);
-
-export const setProjectsAtom = atom(null, (get, set, projects: Project[]) => {
-  projects.forEach(project => {
+export const allProjectsAtom = atom(projectMap, (get, set, projects: any) => {
+  console.log("Setting projects", projects);
+  projects.forEach((project: Project) => {
     projectMap.set(project.id, project);
   });
   set(allProjectsAtom, projectMap);

@@ -8,6 +8,8 @@ export type Note = Omit<NoteEntity, "project" | "user" | "__typename"> & {
   project: string;
 }
 
+export type NoteResponse = NoteEntity
+
 export type IdbStore = {
   projects: {
     key: string;

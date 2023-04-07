@@ -6,6 +6,11 @@ export const GET_NOTES = gql`
             id
             title
             content
+            createdDate
+            updatedDate
+            project {
+                id
+            }
         }
     }
 `

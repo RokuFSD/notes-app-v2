@@ -105,23 +105,75 @@ export type UserMutationReturn = {
   email: Scalars['String'];
 };
 
+export type CreateUserMutationVariables = Exact<{
+  email: Scalars['String'];
+}>;
+
+
+export type CreateUserMutation = { __typename?: 'Mutation', createUser: { __typename?: 'UserMutationReturn', email: string } };
+
 export type GetNotesQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetNotesQuery = { __typename?: 'Query', notes: Array<{ __typename?: 'NoteEntity', id: string, title: string, content: string }> };
+export type GetNotesQuery = { __typename?: 'Query', notes: Array<{ __typename?: 'NoteEntity', id: string, title: string, content: string, createdDate: any, updatedDate: any, project: { __typename?: 'ProjectEntity', id: string } }> };
 
 export type GetProjectsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetProjectsQuery = { __typename?: 'Query', projects: Array<{ __typename?: 'ProjectEntity', id: string, title: string }> };
+export type GetProjectsQuery = { __typename?: 'Query', projects: Array<{ __typename?: 'ProjectEntity', id: string, title: string, updatedDate: any, createdDate: any, notes: Array<{ __typename?: 'NoteEntity', title: string, content: string, createdDate: any, updatedDate: any }> }> };
+
+export type UserExistsQueryVariables = Exact<{
+  email: Scalars['String'];
+}>;
 
 
+export type UserExistsQuery = { __typename?: 'Query', exists: boolean };
+
+
+export const CreateUserDocument = gql`
+    mutation CreateUser($email: String!) {
+  createUser(email: $email) {
+    email
+  }
+}
+    `;
+export type CreateUserMutationFn = ApolloReactCommon.MutationFunction<CreateUserMutation, CreateUserMutationVariables>;
+
+/**
+ * __useCreateUserMutation__
+ *
+ * To run a mutation, you first call `useCreateUserMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useCreateUserMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [createUserMutation, { data, loading, error }] = useCreateUserMutation({
+ *   variables: {
+ *      email: // value for 'email'
+ *   },
+ * });
+ */
+export function useCreateUserMutation(baseOptions?: Apollo.MutationHookOptions<CreateUserMutation, CreateUserMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<CreateUserMutation, CreateUserMutationVariables>(CreateUserDocument, options);
+      }
+export type CreateUserMutationHookResult = ReturnType<typeof useCreateUserMutation>;
+export type CreateUserMutationResult = ApolloReactCommon.MutationResult<CreateUserMutation>;
+export type CreateUserMutationOptions = ApolloReactCommon.BaseMutationOptions<CreateUserMutation, CreateUserMutationVariables>;
 export const GetNotesDocument = gql`
     query GetNotes {
   notes {
     id
     title
     content
+    createdDate
+    updatedDate
+    project {
+      id
+    }
   }
 }
     `;
@@ -157,6 +209,14 @@ export const GetProjectsDocument = gql`
   projects {
     id
     title
+    updatedDate
+    createdDate
+    notes {
+      title
+      content
+      createdDate
+      updatedDate
+    }
   }
 }
     `;
@@ -187,3 +247,36 @@ export function useGetProjectsLazyQuery(baseOptions?: Apollo.LazyQueryHookOption
 export type GetProjectsQueryHookResult = ReturnType<typeof useGetProjectsQuery>;
 export type GetProjectsLazyQueryHookResult = ReturnType<typeof useGetProjectsLazyQuery>;
 export type GetProjectsQueryResult = ApolloReactCommon.QueryResult<GetProjectsQuery, GetProjectsQueryVariables>;
+export const UserExistsDocument = gql`
+    query UserExists($email: String!) {
+  exists(email: $email)
+}
+    `;
+
+/**
+ * __useUserExistsQuery__
+ *
+ * To run a query within a React component, call `useUserExistsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useUserExistsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useUserExistsQuery({
+ *   variables: {
+ *      email: // value for 'email'
+ *   },
+ * });
+ */
+export function useUserExistsQuery(baseOptions: Apollo.QueryHookOptions<UserExistsQuery, UserExistsQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<UserExistsQuery, UserExistsQueryVariables>(UserExistsDocument, options);
+      }
+export function useUserExistsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<UserExistsQuery, UserExistsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<UserExistsQuery, UserExistsQueryVariables>(UserExistsDocument, options);
+        }
+export type UserExistsQueryHookResult = ReturnType<typeof useUserExistsQuery>;
+export type UserExistsLazyQueryHookResult = ReturnType<typeof useUserExistsLazyQuery>;
+export type UserExistsQueryResult = ApolloReactCommon.QueryResult<UserExistsQuery, UserExistsQueryVariables>;

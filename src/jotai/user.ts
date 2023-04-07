@@ -12,4 +12,4 @@ export const setUserAtom = atom(null, (get, set, user: User | null) => {
   set(userAtom, user);
 });
 
-export const onlineAtom = atom(false);
+export const onlineAtom = atom(navigator.onLine);

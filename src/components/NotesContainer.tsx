@@ -25,9 +25,9 @@ function NotesContainer({ projectId }: NotesContainerProps) {
       id={note.id}
       title={note.title}
       content={note.content}
-      createdAt={note.createdAt}
+      createdAt={note.createdDate}
       index={idx}
-      color={note.color}
+      color={"white"}
       project={note.project}
     />
   ));

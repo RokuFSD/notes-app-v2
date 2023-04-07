@@ -69,42 +69,42 @@ export const notedata = [
 export const dropOptions = [
   {
     id: "id1",
-    name: "All",
+    title: "All",
     notes: new Array(3)
   },
   {
     id: "id2",
-    name: "Work",
+    title: "Work",
     notes: new Array(10)
   },
   {
     id: "id3",
-    name: "Personal",
+    title: "Personal",
     notes: new Array(1)
   },
   {
     id: "id4",
-    name: "None",
+    title: "None",
     notes: new Array(0)
   },
   {
     id: "id5",
-    name: "Gym",
+    title: "Gym",
     notes: new Array(0)
   },
   {
     id: "id6",
-    name: "Job",
+    title: "Job",
     notes: new Array(0)
   },
   {
     id: "id7",
-    name: "asd",
+    title: "asd",
     notes: new Array(0)
   },
   {
     id: "id8",
-    name: "Group",
+    title: "Group",
     notes: new Array(20)
   }
 ];

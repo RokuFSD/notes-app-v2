@@ -5,6 +5,14 @@ export const GET_PROJECTS = gql`
         projects {
             id
             title
+            updatedDate
+            createdDate
+            notes {
+                title
+                content
+                createdDate
+                updatedDate
+            }
         }
     }
 `
