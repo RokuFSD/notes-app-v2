@@ -4,7 +4,7 @@ import { useAtomValue, useSetAtom } from "jotai";
 import { onlineAtom, userAtom } from "../jotai/user";
 import { allProjectsAtom } from "../jotai/projects";
 import { allNotesAtom } from "../jotai/notes";
-import { loadingAtom } from "../jotai";
+import { loadingAtom, loadingOnlineQuery } from "../jotai";
 import IDB from "../store/idb";
 import { NoteEntity, useGetNotesLazyQuery, useGetProjectsLazyQuery } from "../generated/generated.graphql";
 import { mergeNotes, mergeProjects } from "../lib/utils/localData";
@@ -20,6 +20,7 @@ export default function useData() {
   const isLogged = !!useAtomValue(userAtom);
   const setNotes = useSetAtom(allNotesAtom);
   const setLoading = useSetAtom(loadingAtom);
+  const setApolloLoading = useSetAtom(loadingOnlineQuery);
   const setProjects = useSetAtom(allProjectsAtom);
   const [getNotes] = useGetNotesLazyQuery();
   const [getProjects] = useGetProjectsLazyQuery();
@@ -31,10 +32,9 @@ export default function useData() {
   async function fetchProjects() {
     if (online && isLogged) {
       try {
-        const { data, error } = await getProjects();
+        const { data } = await getProjects();
         // Query success, merge the data with the local data
         setProjects(await mergeProjects(data?.projects as Project[], IDB));
-
       } catch (err) {
         // Query failed, fetch the data from the local database
         const projects = await IDB.getProjects();
@@ -53,9 +53,8 @@ export default function useData() {
   async function fetchNotes() {
     if (online && isLogged) {
       try {
-        const { data, error } = await getNotes();
-        const mergedNotes = await mergeNotes(data?.notes as NoteEntity[], IDB);
-        setNotes(mergedNotes);
+        const { data } = await getNotes();
+        setNotes(await mergeNotes(data?.notes as NoteEntity[], IDB));
       } catch (err) {
         const notes = await IDB.getNotes();
         setNotes(notes);
@@ -68,18 +67,23 @@ export default function useData() {
 
   useEffect(() => {
     async function fetchAll() {
-      setLoading(true);
       try {
+        if (online && isLogged) {
+          setApolloLoading(true);
+        } else {
+          setLoading(true);
+        }
         await Promise.all(
           [
-            fetchProjects(),
-            fetchNotes()
+            fetchNotes(),
+            fetchProjects()
           ]
         );
       } catch (err) {
         console.log(err);
       } finally {
         setLoading(false);
+        setApolloLoading(false);
       }
     }
 

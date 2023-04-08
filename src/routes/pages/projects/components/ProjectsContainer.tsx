@@ -1,14 +1,13 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { Project } from "../../../../../types/state";
+import { useAtomValue } from "jotai";
+import { allProjectsAtom } from "../../../../jotai/projects";
 
-type ProjectsContainerProps = {
-  projects: Project[];
-}
 
-function ProjectsContainer({ projects }: ProjectsContainerProps) {
+function ProjectsContainer() {
+  const projects = useAtomValue(allProjectsAtom).values();
 
-  const content = projects.map((project) => (
+  const content = Array.from(projects).slice(1).map((project) => (
     <Link to={`/projects/${project.id}`} key={project.id}>
       <div
         className="

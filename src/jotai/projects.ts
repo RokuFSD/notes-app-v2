@@ -1,24 +1,24 @@
 import { atom } from "jotai";
 import { Project } from "../../types/state";
-import { appStore } from "./index";
-import IDB from "../store/idb";
+import { allNotesAtom } from "./notes";
 
-export const defaultProjectAtom = atom<Project>({
+
+export const defaultProjectAtom = atom((get) => ({
   id: "default",
   title: "All",
-  notes: await IDB.getNotes(),
+  notes: get(allNotesAtom),
   updatedDate: new Date(),
   createdDate: new Date()
-});
+}));
 
 const projectMap = new Map<string, Project>();
-
-projectMap.set("default", appStore.get(defaultProjectAtom));
 
 export const currentProjectId = atom<string>("default");
 
 export const allProjectsAtom = atom(projectMap, (get, set, projects: any) => {
-  console.log("Setting projects", projects);
+  if (!projectMap.has("default")) {
+    projectMap.set("default", get(defaultProjectAtom));
+  }
   projects.forEach((project: Project) => {
     projectMap.set(project.id, project);
   });

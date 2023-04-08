@@ -18,7 +18,6 @@ export const loader: LoaderFunction = async ({ params }) => {
 
 export function Project() {
   const project = useLoaderData() as ProjectType;
-  console.log(project)
   return (
     <>
       <HeadSection

@@ -81,6 +81,6 @@ export default defineConfig({
     setupFiles: ["./tests/setup.ts"]
   },
   build: {
-    target: "esnext"
+    target: "esnext",
   }
 });

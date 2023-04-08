@@ -9,19 +9,17 @@ import { IdbInstance } from "../../store/idb";
  */
 
 export async function mergeProjects(projects: Project[], localDB: IdbInstance) {
+  const networkProjects = projects;
   const localProjects = await localDB.getProjects();
   const updatedLocalProjects = localProjects?.map((project) => {
-    const projectOnServer = projects?.find((p) => p.id === project.id);
-    if (projectOnServer) {
-      if (projectOnServer.updatedDate > project.updatedDate) {
-        return projectOnServer;
-      } else {
-        return project;
-      }
+    const projectOnServer = networkProjects?.find((p) => p.id === project.id);
+    if (projectOnServer && projectOnServer.updatedDate > project.updatedDate) {
+      networkProjects.splice(networkProjects.indexOf(projectOnServer), 1);
+      return projectOnServer;
     }
     return project;
   });
-  return [...updatedLocalProjects, ...projects];
+  return [...updatedLocalProjects, ...networkProjects];
 }
 
 /**
@@ -32,23 +30,20 @@ export async function mergeProjects(projects: Project[], localDB: IdbInstance) {
  */
 
 export async function mergeNotes(notes: NoteResponse[], localDB: IdbInstance) {
+  const networkNotes = notes;
   const localNotes = await localDB.getNotes();
 
   const updatedLocalNotes = localNotes?.map((note) => {
-    const noteOnServer = notes?.find((n) => n.id === note.id);
-    if (noteOnServer) {
-      if (noteOnServer.updatedDate > note.updatedDate) {
-        return {
-          ...noteOnServer,
-          project: noteOnServer.project.id
-        };
-      } else {
-        return note;
-      }
-    } else {
-      return note;
+    const noteOnServer = networkNotes?.find((n) => n.id === note.id);
+    if (noteOnServer && noteOnServer.updatedDate > note.updatedDate) {
+      networkNotes.splice(networkNotes.indexOf(noteOnServer), 1);
+      return {
+        ...noteOnServer,
+        project: noteOnServer.project.id
+      };
     }
+    return note;
   });
 
-  return [...updatedLocalNotes, ...notes.map((note) => ({ ...note, project: note.project.id }))];
+  return [...updatedLocalNotes, ...networkNotes.map((note) => ({ ...note, project: note.project.id }))];
 }

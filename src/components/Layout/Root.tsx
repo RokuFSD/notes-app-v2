@@ -5,7 +5,7 @@ import useData from "../../hooks/useData";
 import useAuth from "../../hooks/useAuth";
 import { Outlet } from "react-router-dom";
 import { onlineAtom } from "../../jotai/user";
-import { loadingAtom } from "../../jotai";
+import { loadingAtom, loadingOnlineQuery } from "../../jotai";
 import { useAtomValue, useSetAtom } from "jotai";
 import { classSelector } from "../../lib/utils/classSelector";
 

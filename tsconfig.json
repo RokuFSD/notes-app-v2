@@ -26,12 +26,14 @@
   },
   "include": [
     "src",
-    "tests",
     "tests/setup.ts",
     ".eslintrc.json",
     "vite.config.ts",
     "types",
     "codegen.ts"
+  ],
+  "exclude": [
+    "tests"
   ],
   "references": [
     {

@@ -6,12 +6,15 @@ import NotesContainer from "../../../components/NotesContainer";
 import { PUBLIC_ROUTES } from "../../../../types/routes";
 import { useAtomValue } from "jotai";
 import { allProjectsAtom, currentProjectId } from "../../../jotai/projects";
+import { loadingOnlineQuery } from "../../../jotai";
 
-function DashBoard() {
+function Dashboard() {
   const projectId = useAtomValue(currentProjectId);
   const projects = useAtomValue(allProjectsAtom);
+  const loadingFromApollo = useAtomValue(loadingOnlineQuery)
   return (
     <>
+      {loadingFromApollo && <h1 className="text-7xl text-red-400">Loading from apollo</h1>}
       {/* Header with title and add button */}
       <HeadSection title="Your notes" whereTo={PUBLIC_ROUTES.NEW_NOTE} />
 
@@ -26,4 +29,4 @@ function DashBoard() {
   );
 }
 
-export default DashBoard;
+export default Dashboard

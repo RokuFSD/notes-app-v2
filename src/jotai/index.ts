@@ -1,5 +1,5 @@
-import { atom, createStore } from "jotai";
-
-export const appStore = createStore();
+import { atom } from "jotai";
 
 export const loadingAtom = atom(true);
+
+export const loadingOnlineQuery = atom(false);
