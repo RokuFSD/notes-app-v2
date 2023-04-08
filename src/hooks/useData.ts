@@ -1,14 +1,13 @@
-/* eslint-disable react-hooks/exhaustive-deps */
+/* eslint-disable react-hooks/exhaustive-deps,@typescript-eslint/no-explicit-any */
 import { useEffect } from "react";
 import { useAtomValue, useSetAtom } from "jotai";
 import { onlineAtom, userAtom } from "../jotai/user";
 import { allProjectsAtom } from "../jotai/projects";
 import { allNotesAtom } from "../jotai/notes";
 import { loadingAtom, loadingOnlineQuery } from "../jotai";
-import IDB from "../store/idb";
-import { NoteEntity, useGetNotesLazyQuery, useGetProjectsLazyQuery } from "../generated/generated.graphql";
+import { useGetNotesLazyQuery, useGetProjectsLazyQuery } from "../generated/generated.graphql";
 import { mergeNotes, mergeProjects } from "../lib/utils/localData";
-import { Project } from "../../types/state";
+import IDB, { IdbInstance } from "../store/idb";
 
 /**
  * Custom hook to fetch data from the database or indexedDB based on the online status
@@ -25,44 +24,51 @@ export default function useData() {
   const [getNotes] = useGetNotesLazyQuery();
   const [getProjects] = useGetProjectsLazyQuery();
 
-  /**
-   * Fetch projects from the database or indexedDB based on the online status
-   * @returns {Promise<void>}
-   */
-  async function fetchProjects() {
-    if (online && isLogged) {
-      try {
-        const { data } = await getProjects();
-        // Query success, merge the data with the local data
-        setProjects(await mergeProjects(data?.projects as Project[], IDB));
-      } catch (err) {
-        // Query failed, fetch the data from the local database
-        const projects = await IDB.getProjects();
-        setProjects(projects);
-      }
-    } else {
-      const projects = await IDB.getProjects();
-      setProjects(projects);
-    }
-  }
 
   /**
-   * Fetch notes from the database or indexedDB based on the online status
-   * @returns {Promise<void>}
+   * Fetch data from the server or indexedDB based on the online status and set the data on the atoms
+   * @param getFn
+   * @param setFn
+   * @param getLocalFn
+   * @param mergeFn
    */
-  async function fetchNotes() {
+
+  async function fetchAndSetState(
+    getFn: () => Promise<any>,
+    setFn: (data: any) => void,
+    getLocalFn: () => Promise<any>,
+    mergeFn: (data: any, localDB: IdbInstance) => Promise<any>
+  ) {
+    let finalData = [];
     if (online && isLogged) {
       try {
-        const { data } = await getNotes();
-        setNotes(await mergeNotes(data?.notes as NoteEntity[], IDB));
+        const { data } = await getFn();
+        finalData = await mergeFn(data, IDB);
       } catch (err) {
-        const notes = await IDB.getNotes();
-        setNotes(notes);
+        finalData = await getLocalFn();
       }
     } else {
-      const notes = await IDB.getNotes();
-      setNotes(notes);
+      finalData = await getLocalFn();
     }
+    setFn(finalData);
+  }
+
+  async function fetchNotes() {
+    await fetchAndSetState(
+      getNotes,
+      setNotes,
+      IDB.getNotes.bind(IDB),
+      mergeNotes
+    );
+  }
+
+  async function fetchProjects() {
+    await fetchAndSetState(
+      getProjects,
+      setProjects,
+      IDB.getProjects.bind(IDB),
+      mergeProjects
+    );
   }
 
   useEffect(() => {
@@ -79,8 +85,6 @@ export default function useData() {
             fetchProjects()
           ]
         );
-      } catch (err) {
-        console.log(err);
       } finally {
         setLoading(false);
         setApolloLoading(false);
