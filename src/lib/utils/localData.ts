@@ -1,49 +1,46 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Project, NoteResponse } from "../../../types/state";
 import { IdbInstance } from "../../store/idb";
 
+
 /**
- * Merge the projects from the local data with the projects from the server
- * @param {Project[]} projects - Projects to merge
- * @param {IdbInstance} localDB - IndexedDB static class
- * @returns {Promise<Project[]>}
+ * The mergeData function takes in a data array from the network,
+ * and a function that returns an array of local data. It then merges
+ * the two arrays together by comparing their updatedDate properties.
+ * If there is no updatedDate property on either item, it will default to using id instead.
+
+ *
+ * @param data: any Pass in the data from the network request
+ * @param getLocalFn: () Retrieve the local data from the database
+ * @param mapCb?: (data: any) Map the data before it is returned
+ *
+ * @return An array of objects
+ *
  */
 
-export async function mergeProjects(projects: Project[], localDB: IdbInstance) {
-  const networkProjects = projects;
-  const localProjects = await localDB.getProjects();
-  const updatedLocalProjects = localProjects?.map((project) => {
-    const projectOnServer = networkProjects?.find((p) => p.id === project.id);
-    if (projectOnServer && projectOnServer.updatedDate > project.updatedDate) {
-      networkProjects.splice(networkProjects.indexOf(projectOnServer), 1);
-      return projectOnServer;
+export async function mergeData(data: any, getLocalFn: () => Promise<any>, mapCb?: (data: any) => any) {
+  const networkData = data;
+  const localData = await getLocalFn() as any[];
+
+  const updatedLocalData = localData?.map((item) => {
+    const itemOnServer = networkData?.find((n: any) => n.id === item.id);
+    if (itemOnServer && itemOnServer.updatedDate > item.updatedDate) {
+      networkData.splice(networkData.indexOf(itemOnServer), 1);
+      return mapCb ? mapCb(itemOnServer) : itemOnServer;
     }
-    return project;
+    return item;
   });
-  return [...updatedLocalProjects, ...networkProjects];
+
+  return [...updatedLocalData, ...networkData];
 }
 
-/**
- * Merge the notes from the local data with the notes from the server
- * @param {Note[]} notes - Notes to merge
- * @param {IdbInstance} localDB - IndexedDB static class
- * @returns {Promise<Note[]>}
- */
+export async function mergeProjects(projects: { projects: Project[] }, localDB: IdbInstance) {
+  return await mergeData(projects.projects, localDB.getProjects.bind(localDB));
+}
 
-export async function mergeNotes(notes: NoteResponse[], localDB: IdbInstance) {
-  const networkNotes = notes;
-  const localNotes = await localDB.getNotes();
-
-  const updatedLocalNotes = localNotes?.map((note) => {
-    const noteOnServer = networkNotes?.find((n) => n.id === note.id);
-    if (noteOnServer && noteOnServer.updatedDate > note.updatedDate) {
-      networkNotes.splice(networkNotes.indexOf(noteOnServer), 1);
-      return {
-        ...noteOnServer,
-        project: noteOnServer.project.id
-      };
-    }
-    return note;
-  });
-
-  return [...updatedLocalNotes, ...networkNotes.map((note) => ({ ...note, project: note.project.id }))];
+export async function mergeNotes(notes: { notes: NoteResponse[] }, localDB: IdbInstance) {
+  return await mergeData(notes.notes, localDB.getNotes.bind(localDB), (note: NoteResponse) => ({
+    ...note,
+    project: note.project.id
+  }));
 }

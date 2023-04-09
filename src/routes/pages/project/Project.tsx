@@ -1,11 +1,12 @@
 import React from "react";
-import HeadSection from "../../../components/HeadSection";
-import { LoaderFunction, useLoaderData } from "react-router-dom";
-import { PUBLIC_ROUTES } from "../../../../types/routes";
-import NotesContainer from "../../../components/NotesContainer";
 import IDB from "../../../store/idb";
+import HeadSection from "../../../components/HeadSection";
+import NotesContainer from "../../../components/NotesContainer";
+
+import { PUBLIC_ROUTES } from "../../../../types/routes";
+import { LoaderFunction, useLoaderData } from "react-router-dom";
 import { Project as ProjectType } from "../../../../types/state";
-import { defaultProjectAtom } from "../../../jotai/projects";
+import { defaultProjectAtom } from "../../../jotai";
 import { getDefaultStore } from "jotai";
 
 // React router loader

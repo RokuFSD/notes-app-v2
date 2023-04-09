@@ -1,13 +1,10 @@
 /* eslint-disable react-hooks/exhaustive-deps,@typescript-eslint/no-explicit-any */
 import { useEffect } from "react";
 import { useAtomValue, useSetAtom } from "jotai";
-import { onlineAtom, userAtom } from "../jotai/user";
-import { allProjectsAtom } from "../jotai/projects";
-import { allNotesAtom } from "../jotai/notes";
-import { loadingAtom, loadingOnlineQuery } from "../jotai";
-import { useGetNotesLazyQuery, useGetProjectsLazyQuery } from "../generated/generated.graphql";
 import { mergeNotes, mergeProjects } from "../lib/utils/localData";
 import IDB, { IdbInstance } from "../store/idb";
+import { useGetNotesLazyQuery, useGetProjectsLazyQuery } from "../generated/generated.graphql";
+import { onlineAtom, userAtom, allProjectsAtom, allNotesAtom, loadingAtom, loadingOnlineQuery } from "../jotai";
 
 /**
  * Custom hook to fetch data from the database or indexedDB based on the online status

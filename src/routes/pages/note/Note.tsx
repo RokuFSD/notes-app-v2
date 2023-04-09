@@ -1,12 +1,14 @@
-import { ActionFunction, redirect, useLocation, useNavigate } from "react-router-dom";
 import React, { useMemo } from "react";
-import { Note as NoteType } from "../../../../types/state";
+import { ActionFunction, redirect, useLocation, useNavigate } from "react-router-dom";
 
 import * as Form from "../../../components/Form";
 import IDB from "../../../store/idb";
-import { getDefaultStore } from "jotai";
-import { updateNoteAtom } from "../../../jotai/notes";
 import DeleteButton from "./components/DeleteButton";
+
+import { getDefaultStore } from "jotai";
+import { updateNoteAtom } from "../../../jotai";
+import { Note as NoteType } from "../../../../types/state";
+
 
 export const action: ActionFunction = async ({ request, params }) => {
   const { noteId } = params;

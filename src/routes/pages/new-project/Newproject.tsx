@@ -1,10 +1,11 @@
 import React from "react";
 import * as Form from "../../../components/Form";
-import { ActionFunction, redirect, useNavigate } from "react-router-dom";
-import { Project } from "../../../../types/state";
 import IDB from "../../../store/idb";
+
+import { Project } from "../../../../types/state";
+import { ActionFunction, redirect, useNavigate } from "react-router-dom";
 import { getDefaultStore } from "jotai";
-import { addProjectAtom } from "../../../jotai/projects";
+import { addProjectAtom } from "../../../jotai";
 
 const initialValues = {
   name: ""

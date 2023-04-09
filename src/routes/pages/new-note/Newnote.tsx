@@ -9,9 +9,8 @@ import {
 import IDB from "../../../store/idb";
 import { Note, Project } from "../../../../types/state";
 import { getDefaultStore } from "jotai";
-import { allProjectsAtom } from "../../../jotai/projects";
-import { addNoteAtom } from "../../../jotai/notes";
 import { generateRandomColor } from "../../../lib/utils/randomColor";
+import { addNoteAtom, allProjectsAtom } from "../../../jotai";
 
 const initialValues = {
   title: "",

@@ -1,17 +1,17 @@
 import { useAtomValue, useSetAtom } from "jotai";
-import { userAtom, setUserAtom, onlineAtom } from "../jotai/user";
 import { auth, provider } from "../lib/firebase/init";
 import { signInWithRedirect } from "firebase/auth";
 import { useEffect, useState } from "react";
 import { useUserExistsLazyQuery } from "../generated/generated.graphql";
 import { useCreateUserMutation } from "../generated/generated.graphql";
+import { userAtom, setUserAtom, onlineAtom } from "../jotai";
 
 export default function useAuth() {
   const user = useAtomValue(userAtom);
   const setUser = useSetAtom(setUserAtom);
   const [loading, setLoading] = useState(true);
   const [userRegistered] = useUserExistsLazyQuery();
-  const online = useAtomValue(onlineAtom)
+  const online = useAtomValue(onlineAtom);
   const [register] = useCreateUserMutation();
 
   function login() {

@@ -1,7 +1,7 @@
 import { ActionFunction, redirect } from "react-router-dom";
 import IDB from "../../../../store/idb";
 import { getDefaultStore } from "jotai";
-import { deleteNoteAtom } from "../../../../jotai/notes";
+import { deleteNoteAtom } from "../../../../jotai";
 
 export const action: ActionFunction = async ({ params }) => {
   const { noteId } = params;

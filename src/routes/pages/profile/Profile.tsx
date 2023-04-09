@@ -1,8 +1,8 @@
 import React from "react";
 import { useAtomValue } from "jotai";
-import { userAtom } from "../../../jotai/user";
-import Login from "./components/Login";
+import { userAtom } from "../../../jotai";
 import useAuth from "../../../hooks/useAuth";
+import Login from "./components/Login";
 import Button from "../../../components/Button";
 import DarkModeToggle from "../../../components/DarkModeToggle";
 
