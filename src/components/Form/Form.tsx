@@ -1,12 +1,12 @@
 /* eslint-disable react/require-default-props */
 import React, { ReactNode } from "react";
-import useForm from "../../hooks/useForm";
 import FormInput, { IFormInput } from "./FormInput";
 import FormArea from "./FormArea";
 import FormSelect from "./FormSelect";
-import { ValidationArr } from "../../../types/form";
 import FormSubmit from "./FormSubmit";
 import { Form as FormRouter, FormProps } from "react-router-dom";
+import { useForm } from "../../hooks";
+import { ValidationArr } from "../../../types/form";
 
 type IForm = {
   initialValues: {
@@ -19,12 +19,12 @@ type IForm = {
 };
 
 function Form<T>({
-  initialValues,
-  validations,
-  children,
-  className,
-  method,
-}: IForm) {
+                   initialValues,
+                   validations,
+                   children,
+                   className,
+                   method
+                 }: IForm) {
   const { selectIsValid, useValue, selectError } = useForm<T>(
     initialValues as T,
     validations
@@ -38,7 +38,7 @@ function Form<T>({
         if (React.isValidElement(child)) {
           if (child.type === FormSubmit) {
             return React.cloneElement(child, {
-              disabled: !canSubmit,
+              disabled: !canSubmit
             } as { disabled: boolean; loading: boolean });
           }
           if (
@@ -48,7 +48,7 @@ function Form<T>({
           ) {
             return React.cloneElement(child, {
               valueselector: useValue,
-              errorselector: selectError,
+              errorselector: selectError
             } as IFormInput<T>);
           }
         }

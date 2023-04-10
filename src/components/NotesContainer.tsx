@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import NoteCard from "./NoteCard";
 import { useAtom } from "jotai";
 import { Note } from "../../types/state";
-import { allNotesAtom } from "../jotai/notes";
+import { allNotesAtom } from "../jotai";
 
 
 type NotesContainerProps = {

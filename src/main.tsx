@@ -1,11 +1,11 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import "./index.css";
 import { router } from "./routes/routes";
 import { RouterProvider } from "react-router-dom";
 import { registerSW } from "virtual:pwa-register";
 import { ApolloProvider } from "@apollo/client";
 import client from "./lib/client/apollo";
+import "./index.css";
 
 
 // TODO: Make this the react way

@@ -1,6 +1,6 @@
 import React, { memo, useMemo } from "react";
 import { NavLink } from "react-router-dom";
-import * as CIcon from "@coreui/icons-react";
+import CIcon from "@coreui/icons-react";
 import { cilNotes, cilHome, cilUser } from "@coreui/icons";
 
 type NavbarItemProps = {
@@ -17,7 +17,7 @@ const icons = {
 const activeStyle =
   "relative bg-gradient-to-bl w-12 h-12 flex items-center justify-center rounded-full from-blue-200 to-blue-300 dark:from-zinc-400 dark:to-zinc-800";
 
-const NavBarIcon = memo(CIcon.default);
+const NavBarIcon = memo(CIcon);
 
 function NavbarItem({ label, to }: NavbarItemProps) {
   const icon = useMemo(() => icons[label.toLowerCase() as keyof typeof icons], [label]);

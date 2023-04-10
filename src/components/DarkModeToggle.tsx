@@ -1,5 +1,5 @@
 import React, { useState, useEffect, memo } from "react";
-import * as CIcon from "@coreui/icons-react";
+import CIcon from "@coreui/icons-react";
 import { cilMoon, cilSun } from "@coreui/icons";
 
 function DarkModeToggle() {
@@ -24,7 +24,7 @@ function DarkModeToggle() {
       type="button"
       onClick={() => toggleDarkMode()}
     >
-      <CIcon.default icon={darkMode ? cilSun : cilMoon} className="w-5 h-5" />
+      <CIcon icon={darkMode ? cilSun : cilMoon} className="w-5 h-5" />
     </button>
   );
 }

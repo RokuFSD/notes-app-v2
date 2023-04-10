@@ -1,11 +1,11 @@
 import React, { memo } from "react";
-import * as CIcon from "@coreui/icons-react";
-import { cilSearch } from "@coreui/icons";
+import CIcon from "@coreui/icons-react";
 import DarkModeToggle from "./DarkModeToggle";
+import { userAtom } from "../jotai";
+import { cilSearch } from "@coreui/icons";
 import { useAtomValue } from "jotai";
-import { userAtom } from "../jotai/user";
 
-const SearchIcon = memo(CIcon.default);
+const SearchIcon = memo(CIcon);
 
 function Header() {
   const user = useAtomValue(userAtom);

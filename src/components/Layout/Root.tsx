@@ -1,11 +1,9 @@
 import React, { useEffect } from "react";
 import Header from "../Header";
 import Navbar from "../Nav/Navbar";
-import useData from "../../hooks/useData";
-import useAuth from "../../hooks/useAuth";
 import { Outlet } from "react-router-dom";
-import { onlineAtom } from "../../jotai/user";
-import { loadingAtom, loadingOnlineQuery } from "../../jotai";
+import { useData, useAuth } from "../../hooks";
+import { loadingAtom, onlineAtom } from "../../jotai";
 import { useAtomValue, useSetAtom } from "jotai";
 import { classSelector } from "../../lib/utils/classSelector";
 

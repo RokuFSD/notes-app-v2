@@ -1,13 +1,13 @@
 import React, { memo } from "react";
 import { Form } from "react-router-dom";
-import * as CIcon from "@coreui/icons-react";
 import { cilTrash } from "@coreui/icons";
+import CIcon from "@coreui/icons-react";
 
 type DeleteButtonProps = {
   className: string
 }
 
-const DeleteIcon = memo(CIcon.default);
+const DeleteIcon = memo(CIcon);
 
 function DeleteButton({ className }: DeleteButtonProps) {
   return (
