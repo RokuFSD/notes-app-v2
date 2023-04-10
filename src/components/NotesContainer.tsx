@@ -3,6 +3,7 @@ import NoteCard from "./NoteCard";
 import { useAtom } from "jotai";
 import { Note } from "../../types/state";
 import { allNotesAtom } from "../jotai";
+import sortByDate from "../lib/utils/sortByDate";
 
 
 type NotesContainerProps = {
@@ -14,9 +15,9 @@ function NotesContainer({ projectId }: NotesContainerProps) {
   const [filteredNotes, setFilteredNotes] = useState<Note[]>([]);
 
   useEffect(() => {
-    if (projectId === "default") return setFilteredNotes(allNotes);
+    if (projectId === "default") return setFilteredNotes(allNotes.sort((a, b) => sortByDate(a.createdDate, b.createdDate)));
     const filteredNotes = allNotes.filter(note => note.project === projectId);
-    setFilteredNotes(filteredNotes);
+    setFilteredNotes(filteredNotes.sort((a, b) => sortByDate(a.createdDate, b.createdDate)));
   }, [allNotes, projectId]);
 
   const notes = filteredNotes.map((note, idx) => (

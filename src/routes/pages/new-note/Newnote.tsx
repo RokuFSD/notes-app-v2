@@ -11,6 +11,7 @@ import { Note, Project } from "../../../../types/state";
 import { getDefaultStore } from "jotai";
 import { generateRandomColor } from "../../../lib/utils/randomColor";
 import { addNoteAtom, allProjectsAtom } from "../../../jotai";
+import { v4 as uuidV4 } from "uuid";
 
 const initialValues = {
   title: "",
@@ -21,10 +22,10 @@ const initialValues = {
 
 export const action: ActionFunction = async ({ request }) => {
   const data = await request.formData();
-  data.set("id", Date.now().toString());
+  data.set("id", uuidV4());
   data.set("color", generateRandomColor());
-  data.set("createdDate", new Date().toString());
-  data.set("updatedDate", new Date().toString());
+  data.set("createdDate", new Date().toUTCString());
+  data.set("updatedDate", new Date().toUTCString());
   const note = Object.fromEntries(data.entries());
   await IDB.addNote(note as Note);
 

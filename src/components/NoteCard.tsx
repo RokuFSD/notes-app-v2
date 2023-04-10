@@ -23,6 +23,8 @@ function NoteCard(
     project
   }: NoteCardProps) {
 
+  const date = new Date(createdAt);
+
   return (
     <Link to={`/notes/${id}`} className="w-full h-full" state={{ id, title, content, project }}>
       <div
@@ -39,7 +41,7 @@ function NoteCard(
       >
         <div>
           <h2 className="font-extrabold text-lg">{title}</h2>
-          <span className="text-sm text-zinc-600 font-semibold dark:text-zinc-400">{createdAt}</span>
+          <span className="text-sm text-zinc-600 font-semibold dark:text-zinc-400">{date.toLocaleDateString()}</span>
         </div>
         <p className="text-md opacity-60">{content}</p>
       </div>

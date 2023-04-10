@@ -18,34 +18,43 @@ import { IdbInstance } from "../../store/idb";
  *
  */
 
-export async function mergeData(data: any, getLocalFn: () => Promise<any>, mapCb?: (data: any) => any) {
-  const networkData = data;
-  const localData = await getLocalFn() as any[];
+export async function mergeData(data: any[], getLocalFn: () => Promise<any[]>, mapCb?: (data: any) => any) {
+  const localData = await getLocalFn();
+  const updatedLocalData = localData.map((item) => {
+    const itemOnServer = data.find((n: any) => n.id === item.id);
+    if (!itemOnServer) return item;
 
-  const updatedLocalData = localData?.map((item) => {
-    const itemOnServer = networkData?.find((n: any) => n.id === item.id);
-    if (itemOnServer && itemOnServer.updatedDate > item.updatedDate) {
-      networkData.splice(networkData.indexOf(itemOnServer), 1);
+    const index = data.indexOf(itemOnServer);
+    data = data.filter((_, i) => i !== index);
+
+    if (itemOnServer.updatedDate > item.updatedDate) {
       return mapCb ? mapCb(itemOnServer) : itemOnServer;
+    } else {
+      return item;
     }
-    return item;
   });
 
-  const mappedNetworkData = mapCb ? networkData.map(mapCb) : networkData;
-
+  const mappedNetworkData = mapCb ? data.map(mapCb) : data;
   return [...updatedLocalData, ...mappedNetworkData];
 }
 
 export async function mergeProjects(projects: { projects: Project[] }, localDB: IdbInstance) {
-  return await mergeData(projects.projects, localDB.getProjects.bind(localDB));
+  try {
+    return await mergeData(projects.projects, localDB.getProjects.bind(localDB));
+  } catch (e) {
+    console.error(e);
+  }
 }
 
 export async function mergeNotes(notes: { notes: NoteResponse[] }, localDB: IdbInstance) {
-  return await mergeData(notes.notes, localDB.getNotes.bind(localDB), mapProjectId);
+  try {
+    return await mergeData(notes.notes, localDB.getNotes.bind(localDB), mapProjectId);
+  } catch (e) {
+    console.error(e);
+  }
 }
 
 function mapProjectId(note: NoteResponse) {
-  console.log(note)
   return {
     ...note,
     project: note.project.id

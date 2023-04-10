@@ -14,33 +14,45 @@ import { onlineAtom, userAtom, allProjectsAtom, allNotesAtom, loadingAtom, loadi
 export default function useData() {
   const online = useAtomValue(onlineAtom);
   const isLogged = !!useAtomValue(userAtom);
+
   const setNotes = useSetAtom(allNotesAtom);
   const setLoading = useSetAtom(loadingAtom);
-  const setApolloLoading = useSetAtom(loadingOnlineQuery);
   const setProjects = useSetAtom(allProjectsAtom);
-  const [getNotes] = useGetNotesLazyQuery();
-  const [getProjects] = useGetProjectsLazyQuery();
+  const setApolloLoading = useSetAtom(loadingOnlineQuery);
 
+  const [getNotes] = useGetNotesLazyQuery({
+    fetchPolicy: "network-only"
+  });
+  const [getProjects] = useGetProjectsLazyQuery({
+    fetchPolicy: "network-only"
+  });
 
   /**
-   * Fetch data from the server or indexedDB based on the online status and set the data on the atoms
-   * @param getFn
-   * @param setFn
-   * @param getLocalFn
-   * @param mergeFn
+   * The fetchAndSetState function is a helper function that fetches data from the server and sets it to state.
+   * It also saves the data in IndexedDB for offline use.
+   *
+   * @param getFn: () Get the data from the api
+   * @param setFn: (data: any) Set the state of the component
+   * @param getLocalFn: () Get the data from the local database
+   * @param mergeFn: (data: any Merge the data from the server with the local database
+   * @param saveFn: (data: any) Save the data to the local database
+   *
+   * @return A promise
+   *
    */
-
   async function fetchAndSetState(
     getFn: () => Promise<any>,
     setFn: (data: any) => void,
     getLocalFn: () => Promise<any>,
-    mergeFn: (data: any, localDB: IdbInstance) => Promise<any>
+    mergeFn: (data: any, localDB: IdbInstance) => Promise<any>,
+    saveFn: (data: any) => Promise<any>
   ) {
     let finalData = [];
     if (online && isLogged) {
       try {
         const { data } = await getFn();
         finalData = await mergeFn(data, IDB);
+        await saveFn(finalData);
       } catch (err) {
         finalData = await getLocalFn();
       }
@@ -55,7 +67,8 @@ export default function useData() {
       getNotes,
       setNotes,
       IDB.getNotes.bind(IDB),
-      mergeNotes
+      mergeNotes,
+      IDB.saveNotes.bind(IDB)
     );
   }
 
@@ -64,7 +77,8 @@ export default function useData() {
       getProjects,
       setProjects,
       IDB.getProjects.bind(IDB),
-      mergeProjects
+      mergeProjects,
+      IDB.saveProjects.bind(IDB)
     );
   }
 

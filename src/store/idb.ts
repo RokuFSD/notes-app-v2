@@ -53,7 +53,7 @@ export default abstract class IDB {
   static async saveNotes(notes: Note[]) {
     const db = await this.openDB();
     notes.forEach((note) => {
-      db.add("notes", note);
+      db.put("notes", note);
     });
   }
 
@@ -80,7 +80,7 @@ export default abstract class IDB {
   static async saveProjects(projects: Project[]) {
     const db = await this.openDB();
     projects.forEach((project) => {
-      db.add("projects", project);
+      db.put("projects", project);
     });
   }
 
@@ -99,7 +99,6 @@ export default abstract class IDB {
     await projectStore.put(project);
     //   Save to notes
     await noteStore.add(note);
-
   }
 
   static async updateNote(note: Note) {

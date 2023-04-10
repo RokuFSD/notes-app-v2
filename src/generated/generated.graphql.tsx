@@ -31,6 +31,7 @@ export type MutationCreateNoteArgs = {
 
 
 export type MutationCreateProjectArgs = {
+  id?: InputMaybe<Scalars['String']>;
   title: Scalars['String'];
 };
 
@@ -52,7 +53,8 @@ export type NoteEntity = {
 
 export type NoteInput = {
   content: Scalars['String'];
-  projectId: Scalars['Float'];
+  id?: InputMaybe<Scalars['String']>;
+  projectId: Scalars['String'];
   title: Scalars['String'];
 };
 
@@ -89,7 +91,7 @@ export type QueryExistsArgs = {
 
 
 export type QueryProjectArgs = {
-  id: Scalars['Float'];
+  id: Scalars['String'];
 };
 
 export type UserEntity = {

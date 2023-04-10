@@ -6,6 +6,7 @@ import { Project } from "../../../../types/state";
 import { ActionFunction, redirect, useNavigate } from "react-router-dom";
 import { getDefaultStore } from "jotai";
 import { addProjectAtom } from "../../../jotai";
+import { v4 as uuidV4 } from "uuid";
 
 const initialValues = {
   name: ""
@@ -13,7 +14,10 @@ const initialValues = {
 
 export const action: ActionFunction = async ({ request }) => {
   const data = await request.formData();
-  data.set("id", Date.now().toString());
+  data.set("id", uuidV4());
+  data.set("createdDate", new Date().toUTCString());
+  data.set("updatedDate", new Date().toUTCString());
+
   const project = Object.fromEntries(data.entries()) as unknown;
 
   await getDefaultStore().set(addProjectAtom, project as Project);
