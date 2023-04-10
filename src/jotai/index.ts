@@ -1,4 +1,4 @@
-import { atom } from "jotai/index";
+import { atom } from "jotai";
 
 export * from './user';
 export * from './notes';

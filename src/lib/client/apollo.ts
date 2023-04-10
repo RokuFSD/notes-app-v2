@@ -13,7 +13,7 @@ const authLink = setContext(async (_, { headers }) => {
 });
 
 const httpLink = new HttpLink({
-  uri: "http://localhost:4000/graphql"
+  uri: "https://notes-app-v2-graph.onrender.com/graphql"
 });
 
 const client = new ApolloClient({
