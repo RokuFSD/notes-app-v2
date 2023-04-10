@@ -31,7 +31,9 @@ export async function mergeData(data: any, getLocalFn: () => Promise<any>, mapCb
     return item;
   });
 
-  return [...updatedLocalData, ...networkData];
+  const mappedNetworkData = mapCb ? networkData.map(mapCb) : networkData;
+
+  return [...updatedLocalData, ...mappedNetworkData];
 }
 
 export async function mergeProjects(projects: { projects: Project[] }, localDB: IdbInstance) {
@@ -39,8 +41,13 @@ export async function mergeProjects(projects: { projects: Project[] }, localDB: 
 }
 
 export async function mergeNotes(notes: { notes: NoteResponse[] }, localDB: IdbInstance) {
-  return await mergeData(notes.notes, localDB.getNotes.bind(localDB), (note: NoteResponse) => ({
+  return await mergeData(notes.notes, localDB.getNotes.bind(localDB), mapProjectId);
+}
+
+function mapProjectId(note: NoteResponse) {
+  console.log(note)
+  return {
     ...note,
     project: note.project.id
-  }));
+  };
 }
