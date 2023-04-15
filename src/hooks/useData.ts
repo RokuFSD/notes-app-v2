@@ -3,8 +3,18 @@ import { useEffect } from "react";
 import { useAtomValue, useSetAtom } from "jotai";
 import { mergeNotes, mergeProjects } from "../lib/utils/localData";
 import IDB, { IdbInstance } from "../store/idb";
-import { useGetNotesLazyQuery, useGetProjectsLazyQuery } from "../generated/generated.graphql";
-import { onlineAtom, userAtom, allProjectsAtom, allNotesAtom, loadingAtom, loadingOnlineQuery } from "../jotai";
+import {
+  useGetNotesLazyQuery,
+  useGetProjectsLazyQuery,
+} from "../generated/generated.graphql";
+import {
+  onlineAtom,
+  userAtom,
+  allProjectsAtom,
+  allNotesAtom,
+  loadingAtom,
+  loadingOnlineQuery,
+} from "../jotai";
 
 /**
  * Custom hook to fetch data from the database or indexedDB based on the online status
@@ -21,10 +31,10 @@ export default function useData() {
   const setApolloLoading = useSetAtom(loadingOnlineQuery);
 
   const [getNotes] = useGetNotesLazyQuery({
-    fetchPolicy: "network-only"
+    fetchPolicy: "network-only",
   });
   const [getProjects] = useGetProjectsLazyQuery({
-    fetchPolicy: "network-only"
+    fetchPolicy: "network-only",
   });
 
   /**
@@ -90,12 +100,7 @@ export default function useData() {
         } else {
           setLoading(true);
         }
-        await Promise.all(
-          [
-            fetchNotes(),
-            fetchProjects()
-          ]
-        );
+        await Promise.all([fetchNotes(), fetchProjects()]);
       } finally {
         setLoading(false);
         setApolloLoading(false);
@@ -104,5 +109,4 @@ export default function useData() {
 
     void fetchAll();
   }, [online, isLogged]);
-
-};
+}

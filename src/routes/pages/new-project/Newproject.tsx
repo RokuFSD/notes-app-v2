@@ -1,15 +1,15 @@
 import React from "react";
 import * as Form from "../../../components/Form";
-import IDB from "../../../store/idb";
 
 import { Project } from "../../../../types/state";
 import { ActionFunction, redirect, useNavigate } from "react-router-dom";
 import { getDefaultStore } from "jotai";
 import { addProjectAtom } from "../../../jotai";
 import { v4 as uuidV4 } from "uuid";
+import { ProjectService } from "../../../services/ProjectService";
 
 const initialValues = {
-  name: ""
+  name: "",
 };
 
 export const action: ActionFunction = async ({ request }) => {
@@ -20,9 +20,18 @@ export const action: ActionFunction = async ({ request }) => {
 
   const project = Object.fromEntries(data.entries()) as unknown;
 
-  await getDefaultStore().set(addProjectAtom, project as Project);
+  try {
+    const result = await ProjectService.newProject(
+      (project as Project).title,
+      (project as Project).id,
+      (project as Project).createdDate,
+      (project as Project).updatedDate
+    );
 
-  await IDB.addProject(project as Project);
+    await getDefaultStore().set(addProjectAtom, project as Project);
+  } catch (e) {
+    console.log(e);
+  }
 
   return redirect("/projects");
 };

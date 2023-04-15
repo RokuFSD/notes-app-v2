@@ -4,40 +4,10 @@ import { defineConfig } from "vite";
 import { VitePWA } from "vite-plugin-pwa";
 import mkcert from "vite-plugin-mkcert";
 
-// const runtimeCaching = [
-//   {
-//     handler: "NetworkOnly",
-//     method: "POST",
-//     urlPattern: /\/graphql/,
-//     options: {
-//       backgroundSync: {
-//         name: "graphql",
-//         options: {
-//           maxRetentionTime: 24 * 60,
-//           onSync: async ({ queue }) => {
-//             const entry = await queue.shiftRequest();
-//             if (entry) {
-//               const response = await fetch(entry.request);
-//               if (!response.ok) {
-//                 return await queue.unshiftRequest(entry);
-//               }
-//               // Merge data
-//               response.clone().json().then(data => {
-//                 // Merge data
-//
-//               });
-//             }
-//           }
-//         }
-//       }
-//     }
-//   }
-// ];
-
 // https://vitejs.dev/config/
 export default defineConfig({
   server: {
-    https: true
+    https: true,
   },
   plugins: [
     react(),
@@ -45,6 +15,39 @@ export default defineConfig({
       scope: "/",
       workbox: {
         globPatterns: ["**/*.{js,css,html,ico,png,svg}"],
+        runtimeCaching: [
+          {
+            method: "POST",
+            urlPattern: /http:\/\/localhost:8173\/graphql/,
+            handler: "NetworkOnly",
+            options: {
+              cacheName: "graphql",
+              backgroundSync: {
+                name: "mutations",
+                options: {
+                  maxRetentionTime: 24 * 60,
+                  onSync: async ({ queue }) => {
+                    // Debugging
+                    const entry = await queue.shiftRequest();
+                    if (!entry) return;
+                    const metadata = JSON.parse(
+                      entry.request.headers.get("metadata")!
+                    ) as object;
+                    // eslint-disable-next-line no-prototype-builtins
+                    if (entry && metadata.hasOwnProperty("type")) {
+                      if ((metadata as { type: string }).type !== "mutation")
+                        return;
+                      const response = await fetch(entry.request);
+                      if (!response.ok) {
+                        return await queue.unshiftRequest(entry);
+                      }
+                    }
+                  },
+                },
+              },
+            },
+          },
+        ],
       },
       manifest: {
         name: "NP App",
@@ -53,34 +56,33 @@ export default defineConfig({
         description: "A different kind of note taking app",
         theme_color: "#001f20",
         background_color: "#001f20",
-        // The icons are in src/assets directory
         icons: [
           {
             src: "192.png",
             sizes: "192x192",
-            type: "image/png"
+            type: "image/png",
           },
           {
             src: "256.png",
             sizes: "256x256",
-            type: "image/png"
+            type: "image/png",
           },
           {
             src: "512.png",
             sizes: "512x512",
-            type: "image/png"
-          }
-        ]
-      }
+            type: "image/png",
+          },
+        ],
+      },
     }),
-    mkcert()
+    mkcert(),
   ],
   test: {
     globals: true,
     environment: "jsdom",
-    setupFiles: ["./tests/setup.ts"]
+    setupFiles: ["./tests/setup.ts"],
   },
   build: {
     target: "esnext",
-  }
+  },
 });
